@@ -1,0 +1,12 @@
+[
+  {
+    "mapping_id": "mapping_demo_current_techu_huaian_hotel_candidate",
+    "source_type": "preset_video",
+    "source_id": "preset_current_techu_huaian_hotel_candidate",
+    "video_asset_id": "asset_current_techu_huaian_hotel_candidate",
+    "title": "这条探店视频适合我周六下午去吗？",
+    "task_id": "task_demo_p0a_low_budget_student",
+    "demo_user_context_id": "ctx_low_budget_student",
+    "resolution_strategy": "cache_matched"
+  }
+]

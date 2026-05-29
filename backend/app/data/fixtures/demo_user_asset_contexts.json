@@ -1,0 +1,20 @@
+[
+  {
+    "demo_user_context_id": "ctx_low_budget_student",
+    "display_name": "低预算学生资产上下文",
+    "asset_ids": ["asset_huaian_low_budget_daytrip", "asset_bus_accessible_foods", "asset_under_100_local_experience"],
+    "context_summary": "历史资产偏向省钱、公交/步行、性价比、本地平价体验。"
+  },
+  {
+    "demo_user_context_id": "ctx_efficiency_worker",
+    "display_name": "效率优先上班族资产上下文",
+    "asset_ids": ["asset_weekend_queue_avoidance", "asset_short_city_route", "asset_reservation_offpeak_tips"],
+    "context_summary": "历史资产偏向少排队、交通方便、预约制、短时间完成体验。"
+  },
+  {
+    "demo_user_context_id": "ctx_local_culture",
+    "display_name": "本地特色体验资产上下文",
+    "asset_ids": ["asset_huaian_cuisine_background", "asset_old_brand_local_restaurants", "asset_local_culture_route"],
+    "context_summary": "历史资产偏向老字号、地方菜、城市文化和非网红但有代表性的体验。"
+  }
+]

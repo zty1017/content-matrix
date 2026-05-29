@@ -1,0 +1,28 @@
+[
+  {
+    "task_id": "task_demo_p0a_low_budget_student",
+    "video_asset_id": "asset_current_techu_huaian_hotel_candidate",
+    "asset_kind": "formal",
+    "demo_user_context_id": "ctx_low_budget_student",
+    "session_context": {
+      "raw_text": "我周六下午只有 2 小时，预算 100 元以内，不想排太久队，但希望体验有本地特色的餐厅或路线。",
+      "goals": ["短时间体验本地特色"],
+      "constraints": ["周六下午", "2 小时以内", "预算 100 元以内"],
+      "preferences": ["不想排太久队", "希望本地特色"],
+      "scenario": "本地生活/探店决策"
+    },
+    "source_status": "cache_matched",
+    "asset_status": "asset_complete",
+    "retrieval_status": "retrieval_applied",
+    "related_assets": [{"related_asset_id": "asset_huaian_low_budget_daytrip", "title": "淮安学生党低预算一日游攻略", "match_reason": "与 session_context 中的预算 100 元以内、本地体验目标匹配；与当前视频同属淮安本地生活。", "match_score": 0.86, "influence_type": "preference_adaptation", "influence_summary": "本次决策需要优先关注人均价格和交通成本，避免把餐厅体验变成超预算行程。", "affected_card_sections": ["一句话判断", "关键决策因素", "下一步行动"], "evidence_refs": ["asset_huaian_low_budget_daytrip_ev1"], "confidence_level": "high"}],
+    "inferences": [{"inference_id": "inf_demo_1", "type": "decision_level", "content": "在视频事实补齐后，如果人均不超过预算且排队可控，可作为谨慎推荐；否则应作为备选。", "evidence_refs": ["asset_huaian_low_budget_daytrip_ev1"], "related_asset_refs": ["asset_huaian_low_budget_daytrip"], "confidence": "medium", "needs_confirmation": true}],
+    "primary_card": {
+      "card_type": "decision",
+      "display_name": "决策判断卡",
+      "common": {"title": "这条探店视频适合我周六下午去吗？", "summary": "基于当前视频事实、你的本次预算与历史低预算资产，系统生成有条件判断。"},
+      "specific": {"decision_level": "谨慎推荐", "one_sentence_judgement": "如果人均价格和排队时间都可控，这家店适合作为周六下午的本地特色备选；否则不建议专门前往。", "key_factors": ["预算 100 元以内", "2 小时时间限制", "不想排队", "本地特色体验"], "needs_confirmation": ["人均价格", "周六下午排队情况", "是否需要预约"]},
+      "evidence_refs": ["asset_huaian_low_budget_daytrip_ev1"],
+      "action_entries": [{"action": "confirm", "label": "确认人均与排队情况"}, {"action": "save_snapshot", "label": "保存为周末探店备选"}]
+    }
+  }
+]
