@@ -85,6 +85,32 @@ Keep all experimental parsing behind an adapter boundary so it can be removed wi
 
 Existing source enums already include public `douyin_url` input and asset `douyin_link` source type. Do not add new enum values unless the user first moves that decision through the contract branch.
 
+## File boundaries
+
+Allowed experiment surfaces:
+
+- `backend/app/services/source_resolver.py` for resolver dispatch and fixture-safe Douyin identifier extraction.
+- New isolated service modules under `backend/app/services/` for optional resolver adapters.
+- `backend/app/services/asset_builder.py` only when source-to-asset hydration must preserve the existing contract.
+- `backend/app/services/task_state.py` only when source-type validation needs experiment-safe compatibility.
+- Fixture additions in `backend/app/data/fixtures/source_mappings.json` or `backend/app/data/fixtures/video_content_assets.json` only if the existing schema shape stays unchanged.
+- New or extended tests under `backend/tests/`, especially resolver and fallback tests.
+- Experiment notes under `docs/experiments/`.
+
+Contract-critical files require explicit user approval and should normally move through `contract/v0.1-p0a-contract` first:
+
+- `backend/app/schemas/*.py`;
+- `backend/app/core/errors.py`;
+- `backend/app/core/config.py`;
+- `backend/app/api/v1/*.py`;
+- `backend/app/api/error_handlers.py`;
+- `backend/app/main.py`;
+- `backend/pyproject.toml`;
+- `backend/app/repositories/json_repository.py`;
+- existing guardrail tests such as `backend/tests/test_error_contract.py`, `backend/tests/test_domain_schemas.py`, `backend/tests/test_docs_contract.py`, `backend/tests/test_fixture_repository.py`, and `backend/tests/test_task_card_snapshot_api.py`.
+
+If a contract-critical change seems necessary, stop implementation and document the exact required contract change, rationale, and compatibility risk for review.
+
 ## Error and fallback rules
 
 - Resolution failure must be expected behavior, not an unhandled exception.
@@ -116,6 +142,14 @@ uv run pytest backend/tests
 ```
 
 If commands fail because the environment is missing dependencies, report the exact failure. Do not delete failing tests to pass validation.
+
+Also inspect changed files before pushing:
+
+```bash
+git diff --name-only
+```
+
+If forbidden or contract-critical files appear unexpectedly, stop and explain why they were touched.
 
 ## Documentation expectation
 
