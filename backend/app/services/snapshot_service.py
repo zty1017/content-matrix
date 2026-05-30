@@ -11,6 +11,9 @@ class SnapshotService:
     def __init__(self, repository: JsonFixtureRepository | None = None) -> None:
         self.repository = repository or JsonFixtureRepository()
 
+    def list_snapshots(self) -> list[SavedReconstructionSnapshot]:
+        return self.repository.load_saved_reconstruction_snapshots()
+
     def save_snapshot(self, task_id: str, request: SaveSnapshotRequest) -> SavedReconstructionSnapshot:
         task = self.repository.get_reconstruction_task(task_id)
         if task is None:
@@ -36,6 +39,7 @@ class SnapshotService:
                 "key_decision_or_action": first_action.get("label"),
                 "evidence_refs": task.primary_card.evidence_refs,
                 "related_asset_refs": [asset.related_asset_id for asset in task.related_assets],
+                # Deterministic for local demo snapshots; replace with request/user scoped time in production.
                 "saved_at": "2026-05-30T00:00:00Z",
                 "user_note": request.user_note,
                 "high_risk_domain": task.primary_card.high_risk_domain or task.session_context.high_risk_domain,
