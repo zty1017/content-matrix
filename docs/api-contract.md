@@ -171,6 +171,160 @@ POST /api/v1/tasks/{task_id}/save-snapshot
 
 快照写入 `backend/app/data/runtime/saved_reconstruction_snapshots.json`。
 
+### 12. 列出已保存快照
+
+```
+GET /api/v1/snapshots
+```
+
+返回 fixture 与 runtime 合并后的 `SavedReconstructionSnapshot[]`，用于前端展示“已转换/已保存资产库”。该列表只表示用户在本地 demo 中保存过的重构结果，不代表真实抖音收藏夹，也不会读取任何真实平台账号数据。
+
+响应示例：
+
+```json
+[
+  {
+    "snapshot_id": "snap_demo_p0a_low_budget_student",
+    "source_asset_id": "asset_current_techu_huaian_hotel_candidate",
+    "source_task_id": "task_demo_p0a_low_budget_student",
+    "card_type": "decision",
+    "title": "周末探店备选",
+    "saved_summary": "价格和排队情况待确认后再决定。",
+    "key_decision_or_action": "确认人均与排队情况",
+    "evidence_refs": ["asset_huaian_low_budget_daytrip_ev1"],
+    "related_asset_refs": ["asset_huaian_low_budget_daytrip"],
+    "saved_at": "2026-05-30T00:00:00Z",
+    "user_note": "适合预算内备选",
+    "high_risk_domain": false,
+    "risk_domain_tags": []
+  }
+]
+```
+
+### 13. 本地视频解析演示
+
+```
+POST /api/v1/local-video/parse
+```
+
+用于演示“视频已下载，但尚未进入后端主 fixture 链路”的近实时解析入口。该端点只接受后端 registry 中登记过的 `local_reference_id`，不会接收任意文件路径，也不会访问抖音服务器。当前支持：
+
+- `demo_unparsed_workplace_06`：06-职场短剧，适合展示剧情结构、广告植入点和可复用脚本钩子。
+- `demo_unparsed_finance_12`：12-财经长视频，适合展示观点摘要、风险提示和待确认数据。
+
+请求体字段：
+
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| local_reference_id | string | 是 | 后端登记过的本地视频引用 ID |
+| parse_mode | string | 否 | `fallback` 或 `doubao_if_configured`，默认 `fallback` |
+| demo_user_context_id | string | 否 | 用于前端标记当前演示用户模板 |
+
+响应会返回 `LocalVideoParseResult`，包含：
+
+- `asset`：即时构造出的 `VideoContentAsset`
+- `asr`：ASR 来源、是否 fallback、转写文本和本地转写路径
+- `display_blocks`：按内容类型设计的前端展示块
+- `warnings`：默认不联网、使用本地兜底等说明
+
+注意：`parse_mode=doubao_if_configured` 只表示后端边界已靠近 Doubao BigASR Flash。当前 demo 仍会返回确定性的本地 fallback 结果，避免现场网络不稳定；未来可在该边界替换为真实 `volc.bigasr.auc_turbo` 调用。
+
+### 14. 内容魔方视图聚合
+
+```
+GET /api/v1/cube/tasks/{task_id}
+```
+
+将现有 `ReconstructionTask` 投影成前端更容易消费的 6 个魔方面。该端点不创建新状态、不调用模型、不访问外部服务，只读取 fixture/runtime 合并后的任务数据，并返回：
+
+- `cube_state`：整体魔方状态，枚举包括 `input_ready`、`transforming`、`ready`、`blocked`、`failed`
+- `animation_phase`：建议动画阶段，枚举包括 `source_resolution`、`content_reconstruction`、`matrix_linking`、`final_form`、`needs_confirmation`、`error`
+- `source_status` / `asset_status` / `retrieval_status`：原始任务状态，前端可用于更细粒度动效
+- `progress`：由 fixture/runtime 任务状态推导的演示进度，包含 `percent`、`message` 和 4 个固定步骤；它不代表真实后台异步任务
+- `faces`：稳定的 6 个面，顺序为 `source`、`primary_card`、`related_assets`、`inferences`、`evidence`、`snapshot`
+
+响应示例：
+
+```json
+{
+  "task_id": "task_demo_douyin_08_food_low_budget",
+  "video_asset_id": "asset_douyin_08_chongqing_food_daydream",
+  "cube_state": "ready",
+  "animation_phase": "final_form",
+  "source_status": "source_ready",
+  "asset_status": "asset_complete",
+  "retrieval_status": "retrieval_applied",
+  "progress": {
+    "task_id": "task_demo_douyin_08_food_low_budget",
+    "cube_state": "ready",
+    "animation_phase": "final_form",
+    "percent": 100.0,
+    "message": "内容魔方已完成，可以点击各面查看重构结果。",
+    "steps": [
+      {"step_id": "source_resolution", "title": "链接映射", "phase": "source_resolution", "percent": 20.0, "status": "ready"},
+      {"step_id": "content_reconstruction", "title": "内容重构", "phase": "content_reconstruction", "percent": 45.0, "status": "ready"},
+      {"step_id": "matrix_linking", "title": "资产关联", "phase": "matrix_linking", "percent": 70.0, "status": "ready"},
+      {"step_id": "final_form", "title": "魔方成型", "phase": "final_form", "percent": 100.0, "status": "ready"}
+    ]
+  },
+  "faces": [
+    {
+      "face_id": "source",
+      "face_type": "source_asset",
+      "title": "原始视频与来源",
+      "status": "ready",
+      "target_ref": {"type": "asset", "id": "asset_douyin_08_chongqing_food_daydream"},
+      "display_blocks": []
+    },
+    {
+      "face_id": "snapshot",
+      "face_type": "save_snapshot",
+      "title": "保存到内容魔方",
+      "status": "ready",
+      "target_ref": {"type": "task", "id": "task_demo_douyin_08_food_low_budget"},
+      "display_blocks": [],
+      "action": {"method": "POST", "href": "/api/v1/tasks/task_demo_douyin_08_food_low_budget/save-snapshot"}
+    }
+  ],
+  "warnings": []
+}
+```
+
+推荐前端使用方式：
+
+1. 首屏魔方面输入仍调用 `/source/resolve`、`/tasks` 或 `/local-video/parse`。
+2. 创建 task 后调用 `/cube/tasks/{task_id}` 获取统一 6 面结构。
+3. 若 `cube_state=transforming`，可根据 `progress.percent`、`progress.message` 和 `animation_phase` 播放魔方旋转/展开动效；v0 后端为同步 fixture 状态跳转，进度值是演示用推导值，前端仍可插值动画时间。
+4. 最终点击各面时根据 `target_ref` 和 `action` 跳转或执行保存。
+
+### 15. 内容魔方进度视图
+
+```
+GET /api/v1/cube/tasks/{task_id}/progress
+```
+
+返回与 `CubeView.progress` 相同的轻量进度对象，适合前端在魔方变换期间单独轮询。该端点只根据当前 `ReconstructionTask` 的 `source_status`、`asset_status`、`retrieval_status` 推导演示进度，不创建任务、不推进状态、不调用真实抖音或真实解析。
+
+响应示例：
+
+```json
+{
+  "task_id": "task_runtime_preset_current_techu_huaian_hotel_candidate",
+  "cube_state": "transforming",
+  "animation_phase": "matrix_linking",
+  "percent": 70.0,
+  "message": "正在关联历史资产与证据链，组装魔方面。",
+  "steps": [
+    {"step_id": "source_resolution", "title": "链接映射", "phase": "source_resolution", "percent": 20.0, "status": "ready"},
+    {"step_id": "content_reconstruction", "title": "内容重构", "phase": "content_reconstruction", "percent": 45.0, "status": "ready"},
+    {"step_id": "matrix_linking", "title": "资产关联", "phase": "matrix_linking", "percent": 70.0, "status": "ready"},
+    {"step_id": "final_form", "title": "魔方成型", "phase": "final_form", "percent": 100.0, "status": "pending"}
+  ]
+}
+```
+
+推荐前端策略：创建 task 后立即显示 0→70 的本地插值动画，同时轮询该端点；调用 `/tasks/{task_id}/generate-card` 后再次读取进度，看到 `percent=100.0` 时切换到最终 6 面可点击状态。
+
 ## 错误信封
 
 ### 领域错误格式
@@ -202,7 +356,8 @@ POST /api/v1/tasks/{task_id}/save-snapshot
 | InvalidSourceError | `invalid_source` | 400 | 来源类型或标识无法解析 |
 | ConstrainedRequestError | `constrained_request` | 422 | 业务约束未满足（如 draft 任务、高风险任务） |
 | FixtureDataError | `fixture_data_failure` | 500 | fixture 数据加载或校验失败 |
-| LLMProviderUnavailableError | `llm_provider_unavailable` | 503 | 配置了非 mock 的 LLM 提供商（v0 仅支持 mock） |
+| LLMProviderUnavailableError | `llm_provider_unavailable` | 503 | 配置的真实 LLM 提供商不可用、未实现或缺少本地密钥 |
+| LLMProviderResponseError | `llm_provider_response_error` | 502 | 真实 LLM 提供商返回无法解析或不符合预期的响应 |
 | LLMProviderUnsupportedError | `llm_provider_unsupported` | 400 | 配置了未知的 LLM 提供商名称 |
 
 ### FastAPI 参数校验错误
@@ -232,4 +387,4 @@ POST /api/v1/tasks/{task_id}/save-snapshot
 - ReDoc：`http://localhost:8000/redoc`
 - OpenAPI JSON：`http://localhost:8000/openapi.json`
 
-主要 `/api/v1` 端点在 OpenAPI 中附带请求或响应示例，包括 `POST /source/resolve`、`POST /assets/build`、`GET /assets/search`、`GET /demo-contexts`、`POST /tasks`、`POST /tasks/{task_id}/generate-card` 和 `POST /tasks/{task_id}/save-snapshot`，方便前端和 QA 直接复制使用。
+主要 `/api/v1` 端点在 OpenAPI 中附带请求或响应示例，包括 `POST /source/resolve`、`POST /assets/build`、`GET /assets/search`、`GET /demo-contexts`、`POST /tasks`、`POST /tasks/{task_id}/generate-card`、`POST /tasks/{task_id}/save-snapshot`、`GET /snapshots`、`POST /local-video/parse`、`GET /cube/tasks/{task_id}` 和 `GET /cube/tasks/{task_id}/progress`，方便前端和 QA 直接复制使用。

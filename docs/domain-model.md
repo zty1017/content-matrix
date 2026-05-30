@@ -139,6 +139,46 @@ Content Matrix 的领域模型使用 Pydantic v2 定义，位于 `backend/app/sc
 | saved_at | string | 保存时间（ISO 8601） |
 | user_note | string | 用户备注 |
 
+### CubeView / CubeFace（内容魔方前端聚合视图）
+
+位于 `schemas/cube.py`，用于把已有 `ReconstructionTask` 投影成稳定的 6 面魔方结构。它不是新的业务状态源，只是方便前端渲染 3D 魔方时少拼接多个字段。
+
+`CubeView` 关键字段：
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| task_id | string | 来源重构任务 ID |
+| video_asset_id | string | 来源视频资产 ID |
+| cube_state | string | 魔方整体状态：`input_ready`、`transforming`、`ready`、`blocked`、`failed` |
+| animation_phase | string | 推荐动画阶段：`source_resolution`、`content_reconstruction`、`matrix_linking`、`final_form` 等 |
+| source_status / asset_status / retrieval_status | string | 原始任务状态，保留给前端细粒度动效 |
+| progress | CubeProgress | 由任务状态推导的演示进度，不代表真实后台异步任务 |
+| faces | CubeFace[] | 固定 6 面结构 |
+| warnings | string[] | fixture 推导进度、需前端插值等提示 |
+
+`CubeProgress` 关键字段：
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| task_id | string | 来源重构任务 ID |
+| cube_state | string | 当前魔方整体状态 |
+| animation_phase | string | 当前建议动画阶段 |
+| percent | number | 演示用进度百分比，按当前任务状态推导，典型值为 20、45、70、100 |
+| message | string | 当前阶段展示文案 |
+| steps | CubeProgressStep[] | 固定步骤：链接映射、内容重构、资产关联、魔方成型 |
+
+`CubeFace` 关键字段：
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| face_id | string | 稳定面 ID：`source`、`primary_card`、`related_assets`、`inferences`、`evidence`、`snapshot` |
+| face_type | string | 面的业务类型，如 `source_asset`、`reconstruction_card`、`save_snapshot` |
+| title | string | 展示标题 |
+| status | string | 面状态：`ready`、`loading`、`disabled`、`empty` 等 |
+| target_ref | object | 点击后关联的任务、资产或证据引用 |
+| display_blocks | object[] | 前端可直接渲染的块状内容 |
+| action | object | 可选操作，例如保存快照的 POST 地址 |
+
 ## 演示上下文模型
 
 ### DemoUserAssetContext（演示用户资产上下文）

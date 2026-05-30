@@ -25,6 +25,10 @@ REQUIRED_ENDPOINTS = [
     "/api/v1/tasks/{task_id}",
     "/api/v1/tasks/{task_id}/generate-card",
     "/api/v1/tasks/{task_id}/save-snapshot",
+    "/api/v1/snapshots",
+    "/api/v1/local-video/parse",
+    "/api/v1/cube/tasks/{task_id}",
+    "/api/v1/cube/tasks/{task_id}/progress",
 ]
 
 
