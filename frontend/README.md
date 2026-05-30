@@ -1,30 +1,57 @@
-# 前端目录占位说明
+# React + TypeScript + Vite
 
-> 前端实现已在 v0 阶段被**有意延后**。当前目录仅保留集成边界与后端契约指引，方便后续前端开发者快速接入。
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 后端服务地址
+Currently, two official plugins are available:
 
-- 默认本地地址：`http://localhost:8000`
-- 健康检查端点：`GET /health`
-- OpenAPI 机器契约：`GET /openapi.json`
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 允许的本地前端开发来源
+## Expanding the ESLint configuration
 
-后端 CORS 默认放行以下本地来源（可在 `.env` 中通过 `ALLOWED_ORIGINS` 调整）：
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-- `http://localhost:3000`
-- `http://localhost:5173`
-- `http://127.0.0.1:5173`
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-## 接入必读文档
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-1. `docs/setup.md` — 环境安装、依赖管理与启动命令
-2. `docs/api-contract.md` — `/api/v1` 全部端点语义、请求/响应示例与错误包络说明
-3. `docs/` — 完整中文文档目录，包含架构、领域模型、Mock 数据与 v0 范围说明
-4. `/openapi.json` — 运行时自动生成的 OpenAPI Schema，可作为前端类型生成与接口联调的直接依据
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-## v0 范围提示
-
-- 本阶段不创建任何前端框架代码（React/Vue/Next/Vite 等）、构建配置、UI 页面或静态资源。
-- 所有业务接口均为基于 JSON Fixture 的确定性 Mock，不依赖真实抖音解析、真实 LLM 调用或数据库。
-- 如需查看后端领域模型与数据结构定义，请参考 `backend/app/schemas/` 中的 Pydantic 模型。
+export default tseslint.config({
+  extends: [
+    // other configs...
+    // Enable lint rules for React
+    reactX.configs['recommended-typescript'],
+    // Enable lint rules for React DOM
+    reactDom.configs.recommended,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
