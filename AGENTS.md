@@ -2,6 +2,8 @@
 
 This branch is for the main P0-A Web Demo frontend.
 
+This guidance is branch-specific. Do not copy it into backend or contract branches.
+
 ## Branch responsibility
 
 - Branch: `feature/p0a-web-demo`
@@ -57,6 +59,10 @@ git push origin feature/p0a-web-demo
 - If a field is missing, document the needed field and ask for a contract update.
 - Frontend rendering may reshape data locally for display, but must not change business meaning.
 
+## Frontend bootstrap warning
+
+The v0 `main` branch may contain a backend guardrail test that intentionally forbids real frontend framework files such as `frontend/package.json`, `frontend/src/`, `vite.config.*`, `next.config.*`, `tsconfig.json`, or Tailwind config files. If this branch initializes a real frontend framework, coordinate with the backend owner before changing that guardrail. Do not silently delete backend tests.
+
 ## Product rules
 
 - The web demo must use backend data, not hardcoded business results.
@@ -72,6 +78,11 @@ git push origin feature/p0a-web-demo
 ## Frontend implementation guidance
 
 - Prefer a small, stable demo over a broad unfinished UI.
+- TypeScript is allowed and preferred for frontend work.
+- Do not create an independent TypeScript domain model that disagrees with the backend contract.
+- Prefer generating or deriving TypeScript types from `/openapi.json` once the frontend toolchain is ready.
+- If manual types are needed temporarily, keep them in one API/types module and mirror `docs/api-contract.md` exactly.
+- Do not use `as any`, `@ts-ignore`, or `@ts-expect-error` to bypass contract mismatches; record the missing field as a contract need instead.
 - Keep API access in one client/module so mobile and other frontends can reuse the same contract.
 - Add loading, error, and empty states for demo robustness.
 - Use clear Chinese labels for the P0-A judging flow.
