@@ -14,7 +14,10 @@ backend/app/
 │       ├── source.py        # 来源解析端点
 │       ├── assets.py        # 资产构建与检索端点
 │       ├── demo_contexts.py # 演示上下文端点
-│       └── tasks.py         # 任务工作流端点
+│       ├── tasks.py         # 任务工作流端点
+│       ├── snapshots.py     # 已保存快照列表端点
+│       ├── local_video.py   # 本地已下载视频解析演示端点
+│       └── cube.py          # 内容魔方 6 面聚合视图端点
 ├── core/
 │   ├── config.py            # Pydantic Settings 配置
 │   └── errors.py            # 领域异常基类与具体异常
@@ -24,6 +27,8 @@ backend/app/
 │   ├── demo_contexts.py     # DemoUserAssetContext 与 bundle
 │   ├── tasks.py             # ReconstructionTask 与工作流模型
 │   ├── snapshots.py         # SavedReconstructionSnapshot
+│   ├── local_video.py       # LocalVideoParseRequest/Result
+│   ├── cube.py              # CubeView / CubeFace 前端聚合模型
 │   ├── feedback.py          # LLMFeedback 与提供商枚举
 │   └── errors.py            # API 错误响应 Schema
 ├── repositories/
@@ -35,6 +40,8 @@ backend/app/
     ├── task_state.py        # 任务创建与状态读取
     ├── reconstruction_generator.py  # 卡片生成服务
     ├── snapshot_service.py  # 快照保存服务
+    ├── local_video_parser.py # 本地视频解析演示与 ASR fallback 边界
+    ├── cube_view.py         # ReconstructionTask 到内容魔方 6 面视图的只读投影
     └── llm_client.py        # LLM 客户端边界（仅 mock）
 ```
 
@@ -98,3 +105,18 @@ backend/app/
 1. 客户端 `POST /api/v1/tasks`，`TaskStateService.create_task` 校验 source_mapping，深拷贝 fixture task 并覆盖 session_context，写入 runtime JSON
 2. 客户端 `POST /api/v1/tasks/{task_id}/generate-card`，`ReconstructionGenerator.generate_card` 校验任务状态（拒绝 draft 和高风险任务），更新状态为 `asset_complete`，写入 runtime JSON
 3. 客户端 `POST /api/v1/tasks/{task_id}/save-snapshot`，`SnapshotService.save_snapshot` 校验 `asset_status == asset_complete`，构造 `SavedReconstructionSnapshot`，写入 runtime JSON
+
+以“已下载但未进入主 fixture 链路的视频解析演示”为例：
+
+1. 客户端 `POST /api/v1/local-video/parse`，传入受控的 `local_reference_id`，例如 `demo_unparsed_workplace_06`
+2. `LocalVideoParser` 只从内置 registry 查找该 ID，不接受任意文件路径，也不访问抖音服务器
+3. 服务返回即时构造的 `VideoContentAsset`、ASR fallback 状态和按内容类型组织的 `display_blocks`
+4. `parse_mode=doubao_if_configured` 仅展示 Doubao BigASR Flash 边界状态；默认仍返回本地硬编码兜底结果，避免现场网络不稳定
+
+以“内容魔方 3D 前端渲染”为例：
+
+1. 客户端先通过 `/api/v1/source/resolve`、`/api/v1/tasks` 或 `/api/v1/local-video/parse` 得到可展示的任务/资产数据
+2. 对于进入主任务链路的内容，客户端调用 `GET /api/v1/cube/tasks/{task_id}`
+3. `CubeViewService` 读取同一个 `ReconstructionTask`，不修改数据，只投影成固定 6 个 `CubeFace`
+4. `CubeViewService` 同时根据 `source_status`、`asset_status`、`retrieval_status` 推导 `CubeProgress`，用于演示进度百分比和阶段文案；该进度不代表真实异步任务
+5. 前端使用 `cube_state`、`animation_phase` 和 `progress.percent` 驱动魔方旋转/展开动效，使用每个面的 `target_ref`、`display_blocks` 和 `action` 渲染点击内容
