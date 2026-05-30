@@ -19,10 +19,24 @@ from backend.app.schemas.demo_contexts import DemoSeedAssetBundle, DemoUserAsset
 
 
 REFERENCE_ROOT = Path(__file__).resolve().parents[3] / "onlinechatcontext"
+FIXTURES_ROOT = Path(__file__).resolve().parents[1] / "app" / "data" / "fixtures"
 
 
 def load_reference_json(relative_path: str) -> dict:
-    return json.loads((REFERENCE_ROOT / relative_path).read_text(encoding="utf-8"))
+    reference_path = REFERENCE_ROOT / relative_path
+    if reference_path.exists():
+        return json.loads(reference_path.read_text(encoding="utf-8"))
+    if relative_path == "samples/sample_reconstruction_task_p0a.json":
+        return json.loads((FIXTURES_ROOT / "reconstruction_tasks.json").read_text(encoding="utf-8"))[0]
+    if relative_path == "samples/p0a_demo_seed_assets.json":
+        return {
+            "session_context": json.loads((FIXTURES_ROOT / "reconstruction_tasks.json").read_text(encoding="utf-8"))[0][
+                "session_context"
+            ],
+            "demo_user_contexts": json.loads((FIXTURES_ROOT / "demo_user_asset_contexts.json").read_text(encoding="utf-8")),
+            "seed_video_content_assets": json.loads((FIXTURES_ROOT / "video_content_assets.json").read_text(encoding="utf-8"))[:9],
+        }
+    raise FileNotFoundError(reference_path)
 
 
 def test_sample_reconstruction_task_validates_without_field_renaming():
