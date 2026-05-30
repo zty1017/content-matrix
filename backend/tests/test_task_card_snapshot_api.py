@@ -3,6 +3,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
+from backend.app.api.v1.snapshots import get_snapshot_service as get_snapshot_list_service
 from backend.app.api.v1.tasks import get_reconstruction_generator, get_snapshot_service, get_task_state_service
 from backend.app.core.config import Settings
 from backend.app.main import create_app
@@ -22,6 +23,7 @@ def build_client(tmp_path: Path) -> tuple[TestClient, Path]:
     app.dependency_overrides[get_task_state_service] = lambda: task_service
     app.dependency_overrides[get_reconstruction_generator] = lambda: generator
     app.dependency_overrides[get_snapshot_service] = lambda: snapshot_service
+    app.dependency_overrides[get_snapshot_list_service] = lambda: snapshot_service
     return TestClient(app), runtime_dir
 
 
@@ -96,6 +98,12 @@ def test_create_status_generate_card_and_save_snapshot_flow_is_runtime_backed(tm
 
     persisted_snapshots = json.loads((runtime_dir / "saved_reconstruction_snapshots.json").read_text(encoding="utf-8"))
     assert persisted_snapshots[0]["snapshot_id"] == "snap_task_runtime_preset_current_techu_huaian_hotel_candidate"
+
+    list_response = client.get("/api/v1/snapshots")
+    assert list_response.status_code == 200
+    snapshot_ids = [item["snapshot_id"] for item in list_response.json()]
+    assert "snap_demo_p0a_low_budget_student" in snapshot_ids
+    assert "snap_task_runtime_preset_current_techu_huaian_hotel_candidate" in snapshot_ids
 
 
 def test_missing_task_uses_domain_error_envelope(tmp_path: Path):
@@ -218,3 +226,22 @@ def test_task_create_rejects_fixture_source_type_name_in_public_contract(tmp_pat
         "message": "Source type does not match the configured mapping.",
         "detail": {"field": "source_type", "expected": "preset", "received": "preset_video"},
     }
+
+
+def test_08_food_demo_tasks_support_three_context_cards_and_later_related_video(tmp_path: Path):
+    client, _ = build_client(tmp_path)
+
+    low_budget = client.get("/api/v1/tasks/task_demo_douyin_08_food_low_budget")
+    efficiency = client.get("/api/v1/tasks/task_demo_douyin_08_food_efficiency")
+    culture = client.get("/api/v1/tasks/task_demo_douyin_08_food_culture")
+    later = client.get("/api/v1/tasks/task_demo_douyin_07_later_related_bbq")
+
+    assert low_budget.status_code == 200
+    assert efficiency.status_code == 200
+    assert culture.status_code == 200
+    assert later.status_code == 200
+    assert low_budget.json()["primary_card"]["specific"]["decision_level"] == "推荐作为灵感，不建议原样照单"
+    assert efficiency.json()["primary_card"]["specific"]["decision_level"] == "谨慎推荐"
+    assert culture.json()["primary_card"]["specific"]["decision_level"] == "推荐作为文化入口"
+    assert later.json()["related_assets"][0]["related_asset_id"] == "asset_douyin_08_chongqing_food_daydream"
+    assert "已保存" in later.json()["primary_card"]["common"]["summary"]
