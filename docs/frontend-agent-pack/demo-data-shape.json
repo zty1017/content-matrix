@@ -1,0 +1,138 @@
+{
+  "demoScenarios": [
+    {
+      "id": "food_decision",
+      "title": "探店决策魔方",
+      "subtitle": "本地生活 / 低预算 / 少排队",
+      "defaultContextId": "ctx_low_budget_student",
+      "heroCube": {
+        "taskId": "task_demo_food_decision",
+        "assetId": "asset_demo_food_video",
+        "title": "这条探店视频适合我周六下午去吗？",
+        "state": "ready",
+        "phase": "final_form",
+        "referencedAssetIds": [
+          "asset_weekend_queue_avoidance",
+          "asset_under_100_local_experience",
+          "asset_bus_accessible_foods"
+        ],
+        "faces": {
+          "source": {
+            "label": "原始内容",
+            "status": "ready",
+            "summaryItems": [
+              "探店视频",
+              "本地生活",
+              "约 2 分钟"
+            ]
+          },
+          "primary_card": {
+            "label": "主重构卡",
+            "status": "ready",
+            "summaryItems": [
+              "适合作为备选",
+              "需确认价格和排队"
+            ]
+          },
+          "related_assets": {
+            "label": "历史资产",
+            "status": "ready",
+            "summaryItems": [
+              "参考 3 个资产",
+              "偏好 / 约束 / 经验"
+            ]
+          },
+          "inferences": {
+            "label": "推理待确认",
+            "status": "needs_confirmation",
+            "summaryItems": [
+              "价格待确认",
+              "排队风险"
+            ]
+          },
+          "evidence": {
+            "label": "证据链",
+            "status": "ready",
+            "summaryItems": [
+              "ASR",
+              "历史资产",
+              "用户偏好"
+            ]
+          },
+          "snapshot": {
+            "label": "保存入柜",
+            "status": "ready",
+            "summaryItems": [
+              "可保存为决策资产"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "workplace_skit",
+      "title": "职场短剧拆解魔方",
+      "subtitle": "剧情结构 / 广告植入 / 脚本复用",
+      "defaultContextId": "ctx_creator",
+      "heroCube": {}
+    },
+    {
+      "id": "finance_knowledge",
+      "title": "财经知识解析魔方",
+      "subtitle": "观点摘要 / 证据链 / 风险提示",
+      "defaultContextId": "ctx_knowledge_worker",
+      "heroCube": {}
+    }
+  ],
+  "cabinetShelves": [
+    {
+      "id": "current_related",
+      "title": "当前相关",
+      "kind": "current_related",
+      "assetIds": [
+        "asset_weekend_queue_avoidance",
+        "asset_under_100_local_experience"
+      ]
+    },
+    {
+      "id": "recent",
+      "title": "最近生成",
+      "kind": "recent",
+      "assetIds": []
+    },
+    {
+      "id": "draft",
+      "title": "待确认",
+      "kind": "draft",
+      "assetIds": []
+    }
+  ],
+  "assetCubes": [
+    {
+      "id": "asset_weekend_queue_avoidance",
+      "title": "周末排队规避经验",
+      "type": "experience",
+      "status": "formal",
+      "scenarioTags": [
+        "本地生活",
+        "效率",
+        "排队"
+      ],
+      "sourceType": "demo_seed",
+      "usedCount": 3,
+      "lastUsedFor": "探店决策"
+    },
+    {
+      "id": "asset_under_100_local_experience",
+      "title": "百元以内本地体验",
+      "type": "decision",
+      "status": "formal",
+      "scenarioTags": [
+        "预算",
+        "本地生活"
+      ],
+      "sourceType": "demo_seed",
+      "usedCount": 2
+    }
+  ]
+}
