@@ -24,5 +24,57 @@
       "evidence_refs": ["asset_huaian_low_budget_daytrip_ev1"],
       "action_entries": [{"action": "confirm", "label": "确认人均与排队情况"}, {"action": "save_snapshot", "label": "保存为周末探店备选"}]
     }
+  },
+  {
+    "task_id": "task_demo_douyin_08_food_low_budget",
+    "video_asset_id": "asset_douyin_08_chongqing_food_daydream",
+    "asset_kind": "formal",
+    "demo_user_context_id": "ctx_low_budget_student",
+    "session_context": {"raw_text": "我想去重庆逛吃，但预算有限，希望判断这条美食视频能不能变成一天路线参考。", "goals": ["低预算重庆逛吃路线"], "constraints": ["预算有限", "需要控制交通和排队成本"], "preferences": ["小吃优先", "少踩雷"], "scenario": "本地生活/旅行美食决策"},
+    "source_status": "cache_matched",
+    "asset_status": "asset_complete",
+    "retrieval_status": "retrieval_applied",
+    "related_assets": [{"related_asset_id": "asset_under_100_local_experience", "title": "100 元以内本地特色体验清单", "match_reason": "用户预算有限，而 08-美食只提供强种草清单，缺少价格和排队信息。", "match_score": 0.88, "influence_type": "preference_adaptation", "influence_summary": "卡片应把重庆美食热情转化为低预算可执行路线，而不是照单全吃。", "affected_card_sections": ["一句话判断", "关键决策因素", "下一步行动"], "evidence_refs": ["asset_under_100_local_experience_ev1", "asset_douyin_08_food_ev_missing"], "confidence_level": "high"}],
+    "inferences": [{"inference_id": "inf_douyin_08_low_budget_1", "type": "decision_level", "content": "该视频适合作为重庆美食灵感清单，但不应直接作为预算内行程，需要先筛选小吃、确认价格并减少高成本正餐。", "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao", "asset_under_100_local_experience_ev1"], "related_asset_refs": ["asset_under_100_local_experience"], "confidence": "medium", "needs_confirmation": true}],
+    "primary_card": {"card_type": "decision", "display_name": "低预算重庆逛吃决策卡", "common": {"title": "这条重庆美食视频适合我低预算照着吃吗？", "summary": "它很适合作为重庆美食愿望清单，但对低预算用户应改造成“小吃优先、价格先确认、少排队”的轻量路线。"}, "specific": {"decision_level": "推荐作为灵感，不建议原样照单", "one_sentence_judgement": "可以收藏并拆成低预算小吃清单，但火锅、整鸡、烤排骨等高成本项需要二次筛选。", "key_factors": ["预算有限", "视频未给价格", "高热度美食可能排队", "小吃比完整正餐更适合低预算"], "needs_confirmation": ["单项价格", "店铺位置", "排队时长"]}, "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao", "asset_douyin_08_food_ev_missing", "asset_under_100_local_experience_ev1"], "action_entries": [{"action": "save_snapshot", "label": "保存为重庆低预算逛吃灵感"}, {"action": "confirm", "label": "补充价格和位置"}]}
+  },
+  {
+    "task_id": "task_demo_douyin_08_food_efficiency",
+    "video_asset_id": "asset_douyin_08_chongqing_food_daydream",
+    "asset_kind": "formal",
+    "demo_user_context_id": "ctx_efficiency_worker",
+    "session_context": {"raw_text": "我出差到重庆只有晚上两小时，不想排队，想判断这条视频能不能快速转成可执行选择。", "goals": ["两小时内完成重庆美食体验"], "constraints": ["时间很短", "不想排队", "交通要简单"], "preferences": ["效率优先", "预约或就近优先"], "scenario": "出差间隙/效率决策"},
+    "source_status": "cache_matched",
+    "asset_status": "asset_complete",
+    "retrieval_status": "retrieval_applied",
+    "related_assets": [{"related_asset_id": "asset_weekend_queue_avoidance", "title": "周末热门餐厅排队避坑清单", "match_reason": "视频列出大量热门重庆美食，但效率上下文要求少排队、少移动。", "match_score": 0.9, "influence_type": "conflict_warning", "influence_summary": "卡片应提醒不要把全天美食清单压缩进两小时，而应选就近、可预约、低排队风险的 1-2 项。", "affected_card_sections": ["一句话判断", "关键决策因素", "风险提醒"], "evidence_refs": ["asset_weekend_queue_avoidance_ev1", "asset_douyin_08_food_ev_asr_doubao"], "confidence_level": "high"}],
+    "inferences": [{"inference_id": "inf_douyin_08_efficiency_1", "type": "conflict_warning", "content": "08-美食的全天狂吃清单与两小时效率目标冲突，应该生成“就近单点体验”而非完整路线。", "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao", "asset_weekend_queue_avoidance_ev1"], "related_asset_refs": ["asset_weekend_queue_avoidance"], "confidence": "high", "needs_confirmation": true}],
+    "primary_card": {"card_type": "decision", "display_name": "效率优先重庆美食决策卡", "common": {"title": "这条重庆美食视频适合两小时出差间隙吗？", "summary": "视频适合激发食欲，但对效率优先用户应压缩成就近 1-2 个可预约/低排队选择。"}, "specific": {"decision_level": "谨慎推荐", "one_sentence_judgement": "不要按视频全量执行，只建议选酒店或会场附近的一个高代表性品类。", "key_factors": ["两小时限制", "排队风险", "跨区交通成本", "是否可预约"], "needs_confirmation": ["当前位置附近店铺", "实时排队", "营业时间"]}, "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao", "asset_weekend_queue_avoidance_ev1"], "action_entries": [{"action": "save_snapshot", "label": "保存为出差间隙重庆美食备选"}, {"action": "confirm", "label": "确认附近低排队店铺"}]}
+  },
+  {
+    "task_id": "task_demo_douyin_08_food_culture",
+    "video_asset_id": "asset_douyin_08_chongqing_food_daydream",
+    "asset_kind": "formal",
+    "demo_user_context_id": "ctx_local_culture",
+    "session_context": {"raw_text": "我更关心重庆本地特色和城市文化，不只是吃网红店。", "goals": ["理解重庆本地饮食文化"], "constraints": ["避免只看网红热闹", "希望有城市特色"], "preferences": ["地方代表性", "文化解释"], "scenario": "城市文化/本地特色体验"},
+    "source_status": "cache_matched",
+    "asset_status": "asset_complete",
+    "retrieval_status": "retrieval_applied",
+    "related_assets": [{"related_asset_id": "asset_huaian_cuisine_background", "title": "淮安地方菜背景与代表菜介绍", "match_reason": "虽然城市不同，但历史资产偏好显示用户重视地方饮食背景和文化解释。", "match_score": 0.74, "influence_type": "supplement", "influence_summary": "卡片应从重庆饮食代表性、辣味文化和城市生活节奏角度解释，而不仅是列菜名。", "affected_card_sections": ["摘要", "关键决策因素", "下一步行动"], "evidence_refs": ["asset_huaian_cuisine_background_ev1", "asset_douyin_08_food_ev_asr_doubao"], "confidence_level": "medium"}],
+    "inferences": [{"inference_id": "inf_douyin_08_culture_1", "type": "supplement", "content": "该视频中的小面、毛血旺、火锅、泡椒类食物可以被重构为重庆饮食文化入口，而非单纯探店清单。", "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao"], "related_asset_refs": ["asset_huaian_cuisine_background"], "confidence": "medium", "needs_confirmation": false}],
+    "primary_card": {"card_type": "decision", "display_name": "本地文化重庆美食决策卡", "common": {"title": "这条重庆美食视频能帮我理解本地特色吗？", "summary": "视频适合做重庆饮食文化的入口：它集中呈现辣味、小面、火锅和夜间烧烤等城市生活符号。"}, "specific": {"decision_level": "推荐作为文化入口", "one_sentence_judgement": "如果目标是理解重庆城市味觉和生活节奏，这条视频比单纯找店更适合作为主题索引。", "key_factors": ["重庆辣味和火锅符号", "全天候逛吃节奏", "地方饮食代表性", "需要补充具体店铺背景"], "needs_confirmation": ["哪些菜最具地方代表性", "是否有非网红老店替代"]}, "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao", "asset_huaian_cuisine_background_ev1"], "action_entries": [{"action": "save_snapshot", "label": "保存为重庆饮食文化入口"}, {"action": "search_related", "label": "继续找本地老店和文化背景"}]}
+  },
+  {
+    "task_id": "task_demo_douyin_07_later_related_bbq",
+    "video_asset_id": "asset_douyin_07_chongqing_bbq_travel",
+    "asset_kind": "formal",
+    "demo_user_context_id": "ctx_efficiency_worker",
+    "session_context": {"raw_text": "后来又刷到重庆烤肉/旅行相关视频，想看看之前保存的重庆美食资产会不会影响这次重构。", "goals": ["利用已保存重庆美食资产辅助新视频判断"], "constraints": ["后续视频信息较少", "不能声称读取真实收藏夹"], "preferences": ["结合已转换资产", "快速判断是否相关"], "scenario": "后续相关视频/资产召回演示"},
+    "source_status": "cache_matched",
+    "asset_status": "asset_complete",
+    "retrieval_status": "retrieval_applied",
+    "related_assets": [{"related_asset_id": "asset_douyin_08_chongqing_food_daydream", "title": "昨晚做了个饿梦，梦到我又去雾都了", "match_reason": "用户已把 08-美食保存为重庆逛吃资产；后续 07-旅行/烤肉视频共享重庆本地生活和餐饮主题。", "match_score": 0.92, "influence_type": "supplement", "influence_summary": "新视频的重构应引用之前保存的重庆美食清单，提示它可能是同一重庆逛吃路线中的烤肉节点。", "affected_card_sections": ["相关资产提示", "一句话判断", "下一步行动"], "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao", "asset_douyin_07_bbq_ev_metadata"], "confidence_level": "high"}],
+    "inferences": [{"inference_id": "inf_douyin_07_later_1", "type": "retrieval_influence", "content": "由于历史资产中已有重庆全天美食清单，系统可以把后续烤肉/旅行视频识别为相关补充，而不是孤立新视频。", "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao", "asset_douyin_07_bbq_ev_metadata"], "related_asset_refs": ["asset_douyin_08_chongqing_food_daydream"], "confidence": "high", "needs_confirmation": false}],
+    "primary_card": {"card_type": "decision", "display_name": "后续相关视频影响卡", "common": {"title": "后续刷到重庆烤肉视频时，已保存美食资产如何影响判断？", "summary": "系统可把它与已保存的 08-美食重庆逛吃资产关联起来，作为同一主题资产库的补充节点。"}, "specific": {"decision_level": "推荐关联保存", "one_sentence_judgement": "这条后续视频适合作为重庆逛吃资产库的烤肉补充，而不是重新从零理解。", "key_factors": ["与重庆美食主题一致", "可补充餐厅/烤肉节点", "后续视频信息较少，需要更多事实确认"], "needs_confirmation": ["餐厅位置", "价格", "是否与 08-美食路线同区"]}, "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao", "asset_douyin_07_bbq_ev_metadata"], "action_entries": [{"action": "save_snapshot", "label": "保存为重庆逛吃资产补充"}, {"action": "compare", "label": "与已保存重庆美食资产对照"}]}
   }
 ]

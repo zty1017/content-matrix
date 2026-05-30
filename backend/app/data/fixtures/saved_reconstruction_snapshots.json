@@ -11,5 +11,18 @@
     "related_asset_refs": ["asset_huaian_low_budget_daytrip"],
     "saved_at": "2026-05-30T00:00:00Z",
     "user_note": "适合预算内备选"
+  },
+  {
+    "snapshot_id": "snap_demo_douyin_08_food_low_budget",
+    "source_asset_id": "asset_douyin_08_chongqing_food_daydream",
+    "source_task_id": "task_demo_douyin_08_food_low_budget",
+    "card_type": "decision",
+    "title": "重庆低预算逛吃灵感",
+    "saved_summary": "08-美食适合作为重庆美食愿望清单，但低预算用户应先筛选小吃、确认价格和位置。",
+    "key_decision_or_action": "保存为重庆低预算逛吃灵感",
+    "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao", "asset_douyin_08_food_ev_missing"],
+    "related_asset_refs": ["asset_under_100_local_experience"],
+    "saved_at": "2026-05-30T00:00:00Z",
+    "user_note": "用于后续重庆相关视频召回，不代表真实抖音收藏夹。"
   }
 ]

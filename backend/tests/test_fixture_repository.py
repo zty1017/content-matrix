@@ -20,11 +20,16 @@ def test_committed_fixtures_validate_through_schema_models():
     snapshots = repository.load_saved_reconstruction_snapshots(include_runtime=False)
     mappings = repository.load_source_mappings()
 
-    assert len(assets) == 9
+    assert len(assets) == 11
     assert len(contexts) == 3
-    assert len(tasks) == 1
-    assert len(snapshots) == 1
-    assert mappings[0]["video_asset_id"] == "asset_current_techu_huaian_hotel_candidate"
+    assert len(tasks) == 5
+    assert len(snapshots) == 2
+    assert len(mappings) == 4
+    assert {mapping["video_asset_id"] for mapping in mappings} == {
+        "asset_current_techu_huaian_hotel_candidate",
+        "asset_douyin_08_chongqing_food_daydream",
+        "asset_douyin_07_chongqing_bbq_travel",
+    }
     assert assets[0].asset_id == "asset_huaian_low_budget_daytrip"
     assert contexts[0].asset_ids == [
         "asset_huaian_low_budget_daytrip",
@@ -39,6 +44,9 @@ def test_fixture_lookup_and_search_are_deterministic():
     context = repository.get_demo_user_asset_context("ctx_efficiency_worker")
     search_results = repository.search_video_content_assets(tags=["效率"], query="排队")
     source_mapping = repository.get_source_mapping("preset_current_techu_huaian_hotel_candidate")
+    food_mapping = repository.get_source_mapping("w3JLRkaZ6UQ")
+    huaian_alias = repository.get_source_mapping("K5I9o0ITcJ8")
+    later_task = repository.get_reconstruction_task("task_demo_douyin_07_later_related_bbq", include_runtime=False)
 
     assert context is not None
     assert context.display_name == "效率优先上班族资产上下文"
@@ -49,6 +57,12 @@ def test_fixture_lookup_and_search_are_deterministic():
     assert repository.get_video_content_asset("missing_asset") is None
     assert source_mapping is not None
     assert source_mapping["task_id"] == "task_demo_p0a_low_budget_student"
+    assert food_mapping is not None
+    assert food_mapping["video_asset_id"] == "asset_douyin_08_chongqing_food_daydream"
+    assert huaian_alias is not None
+    assert huaian_alias["task_id"] == "task_demo_p0a_low_budget_student"
+    assert later_task is not None
+    assert later_task.related_assets[0].related_asset_id == "asset_douyin_08_chongqing_food_daydream"
 
 
 def test_malformed_fixture_fails_predictably(tmp_path: Path):
