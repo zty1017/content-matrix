@@ -11,6 +11,7 @@ class LLMProvider(str, Enum):
     doubao = "doubao"
     deepseek = "deepseek"
     qwen = "qwen"
+    meituan = "meituan"
 
 
 class FeedbackMode(str, Enum):

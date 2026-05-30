@@ -3,7 +3,7 @@ import pytest
 from backend.app.core.config import Settings
 from backend.app.core.errors import DomainError
 from backend.app.schemas.feedback import FeedbackMessage, FeedbackMode, LLMProvider
-from backend.app.services.llm_client import LLMClient
+from backend.app.services.llm_client import LLMClient, LLMProviderResponseError
 
 
 def build_client(provider: str = "mock", **overrides) -> LLMClient:
@@ -60,8 +60,12 @@ def test_non_mock_providers_raise_controlled_error_without_secret_leakage(provid
     assert error.status_code == 503
     assert payload == {
         "code": "llm_provider_unavailable",
-        "message": "Configured LLM provider is disabled in v0 offline mode.",
-        "detail": {"provider": provider, "model": f"{provider}-model", "mock_required": True},
+        "message": "Configured LLM provider is not implemented yet.",
+        "detail": {
+            "provider": provider,
+            "model": f"{provider}-model",
+            "implemented_providers": ["mock", "meituan"],
+        },
     }
     assert secret_value not in str(error)
     assert secret_value not in repr(payload)
@@ -78,5 +82,72 @@ def test_unsupported_provider_raises_controlled_error():
     assert payload["code"] == "llm_provider_unsupported"
     assert payload["detail"] == {
         "provider": "anthropic",
-        "supported_providers": ["mock", "openai", "doubao", "deepseek", "qwen"],
+        "supported_providers": ["mock", "openai", "doubao", "deepseek", "qwen", "meituan"],
+    }
+
+
+def test_meituan_provider_requires_api_key_without_secret_leakage():
+    client = build_client(
+        "meituan",
+        llm_model="LongCat-2.0-Preview",
+        llm_mock_mode=False,
+    )
+
+    with pytest.raises(DomainError) as exc_info:
+        client.generate_feedback([FeedbackMessage(role="user", content="hello")])
+
+    payload = exc_info.value.to_payload()
+
+    assert payload == {
+        "code": "llm_provider_unavailable",
+        "message": "Meituan LongCat API key is not configured.",
+        "detail": {
+            "provider": "meituan",
+            "model": "LongCat-2.0-Preview",
+            "required_env": "MEITUAN_API_KEY",
+        },
+    }
+
+
+def test_meituan_provider_returns_openai_compatible_content(monkeypatch):
+    client = build_client(
+        "meituan",
+        llm_model="LongCat-2.0-Preview",
+        llm_mock_mode=False,
+        meituan_api_key="test-meituan-secret",
+    )
+    captured_messages = []
+
+    def fake_post(messages):
+        captured_messages.extend(messages)
+        return {"choices": [{"message": {"content": "LongCat response"}}]}
+
+    monkeypatch.setattr(client, "_post_meituan_chat_completion", fake_post)
+
+    feedback = client.generate_feedback([FeedbackMessage(role="user", content="hello")])
+
+    assert feedback.provider == LLMProvider.meituan
+    assert feedback.is_mock is False
+    assert feedback.model == "LongCat-2.0-Preview"
+    assert feedback.content == "LongCat response"
+    assert captured_messages == [FeedbackMessage(role="user", content="hello")]
+    assert "test-meituan-secret" not in feedback.model_dump_json()
+
+
+def test_meituan_provider_rejects_malformed_response(monkeypatch):
+    client = build_client(
+        "meituan",
+        llm_model="LongCat-2.0-Preview",
+        llm_mock_mode=False,
+        meituan_api_key="test-meituan-secret",
+    )
+    monkeypatch.setattr(client, "_post_meituan_chat_completion", lambda messages: {"choices": []})
+
+    with pytest.raises(LLMProviderResponseError) as exc_info:
+        client.generate_feedback([FeedbackMessage(role="user", content="hello")])
+
+    assert exc_info.value.to_payload() == {
+        "code": "llm_provider_response_error",
+        "message": "Meituan LongCat API response is missing assistant content.",
+        "detail": {"provider": "meituan", "model": "LongCat-2.0-Preview"},
     }
