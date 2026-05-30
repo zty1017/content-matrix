@@ -5,7 +5,7 @@
 ## v0 已实现的能力
 
 1. **后端骨架**：FastAPI 应用工厂、CORS、OpenAPI 文档、健康检查 `/health`
-2. **业务 API**：`/api/v1` 下的 10 个业务端点（来源解析、资产构建/获取/搜索、演示上下文、任务创建/状态/卡片生成/快照保存）
+2. **业务 API**：`/api/v1` 下的 12 个业务端点（来源解析、资产构建/获取/搜索、演示上下文、任务创建/状态/卡片生成/快照保存、快照列表、本地视频解析演示）
 3. **领域模型**：完整的 Pydantic Schema 层（资产、证据、事实、任务、卡片、快照、上下文、LLM 反馈）
 4. **错误契约**：统一的 `{code, message, detail}` 领域错误信封，保留 FastAPI 默认 422 格式
 5. **Mock 数据层**：JSON fixture 仓库 + runtime 写入机制，覆盖任务和快照生命周期
@@ -23,12 +23,20 @@
 - **不存在**：访问抖音服务器、解析真实视频链接、下载视频元数据或封面
 - **实际情况**：`source/resolve` 仅对 `douyin_url` 做形状校验（域名必须包含 `douyin.com`），然后在本地 fixture 的 `source_mappings.json` 中查找匹配的 token
 - **影响**：任何不在 fixture 中的真实抖音链接都会返回 `invalid_source` 错误
+- **演示例外说明**：`w3JLRkaZ6UQ`、`K5I9o0ITcJ8` 等 token 只是本地 fixture 映射；其中 08-美食引用了已下载到 asset inbox 的本地媒体文件，仍不代表后端会实时下载或解析抖音。
 
 ### 2. 真实 LLM 生成
 
-- **不存在**：调用 OpenAI、豆包、DeepSeek、通义千问或其他任何真实 LLM API
-- **实际情况**：`LLMClient.generate_feedback()` 仅在 `llm_provider == mock` 时返回固定格式的 mock 内容；配置为其他提供商会直接抛出 `llm_provider_unavailable` 错误
-- **影响**：卡片生成（`/tasks/{task_id}/generate-card`）是同步的状态转换，不涉及真实模型推理
+- **默认不存在**：OpenAI、豆包、DeepSeek、通义千问等真实 LLM API 仍未接入
+- **本地实验例外**：可通过 `LLM_PROVIDER=meituan`、`LLM_MODEL=LongCat-2.0-Preview`、`LLM_MOCK_MODE=false` 和本地 `MEITUAN_API_KEY` 调用美团 LongCat，用于开发测试 LLM 边界
+- **实际情况**：默认 `LLM_MOCK_MODE=true` 仍返回固定格式的 mock 内容；除 `meituan` 外的非 mock 提供商会抛出 `llm_provider_unavailable` 错误
+- **影响**：卡片生成（`/tasks/{task_id}/generate-card`）仍是同步状态转换，不依赖真实模型推理；LongCat 仅用于 LLM feedback boundary 的本地试验
+
+### 2.1 真实在线 ASR
+
+- **默认不存在**：`POST /local-video/parse` 默认不会在线调用 Doubao ASR。
+- **边界已预留**：配置项 `ASR_PROVIDER`、`ASR_MOCK_MODE`、`ASR_DOUBAO_RESOURCE_ID`、`ASR_REQUEST_TIMEOUT_SECONDS` 已存在；`parse_mode=doubao_if_configured` 会展示 Doubao BigASR Flash 边界状态。
+- **实际情况**：当前 endpoint 始终返回本地硬编码 fallback transcript/summary，保证现场演示稳定；未来可在该边界接入 `volc.bigasr.auc_turbo`。
 
 ### 3. 数据库持久化
 

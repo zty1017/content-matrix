@@ -47,6 +47,23 @@ uv run uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
 | `ALLOWED_ORIGINS` | 见下方 | CORS 允许的源 |
 | `LLM_PROVIDER` | mock | LLM 提供商 |
 | `LLM_MOCK_MODE` | True | 是否使用 Mock LLM |
+| `LLM_MODEL` | mock-content-matrix-v0 | LLM 模型名；美团 LongCat 本地测试可设为 `LongCat-2.0-Preview` |
+| `MEITUAN_API_KEY` | 空 | 美团 LongCat API Key，仅保存在本地 `.env`，不要提交 |
+| `MEITUAN_BASE_URL` | https://api.longcat.chat/openai | OpenAI-compatible LongCat base URL |
+| `LLM_REQUEST_TIMEOUT_SECONDS` | 30 | 真实 provider 请求超时秒数 |
+| `LLM_MAX_TOKENS` | 1024 | 真实 provider 单次最大输出 token 数 |
+| `LLM_TEMPERATURE` | 0.7 | 真实 provider 采样温度 |
+
+如需本地试用美团 LongCat，请在本地 `.env` 中设置：
+
+```bash
+LLM_PROVIDER=meituan
+LLM_MODEL=LongCat-2.0-Preview
+LLM_MOCK_MODE=false
+MEITUAN_API_KEY=你的本地开发密钥
+```
+
+`.env` 不应提交到 Git；默认 `LLM_MOCK_MODE=true` 仍会走离线 mock。
 
 默认 `ALLOWED_ORIGINS` 包含三个本地前端地址：
 

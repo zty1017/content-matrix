@@ -1,6 +1,6 @@
 # Content Matrix 中文文档
 
-Content Matrix 是一个面向本地生活视频内容的知识重构系统。v0 版本已完成后端骨架、Mock API、领域模型和基础测试套件，全部基于离线数据运行，不依赖真实抖音解析、真实 LLM 调用或数据库存储。
+Content Matrix 是一个面向本地生活视频内容的知识重构系统。v0 版本已完成后端骨架、Mock API、领域模型和基础测试套件，主链路默认基于离线数据运行，不依赖真实抖音解析、真实 LLM 调用或数据库存储；本地开发可显式开启美团 LongCat provider 测试 LLM 边界。
 
 ## 文档导航
 
@@ -27,8 +27,8 @@ uv run uvicorn backend.app.main:app --reload
 
 ## 核心设计原则
 
-1. **离线优先**：所有数据和逻辑都在本地 JSON fixture 中完成，不访问外部网络。
-2. **Mock 驱动**：LLM、抖音解析、数据库持久化均使用 Mock 或占位实现。
+1. **离线优先**：主链路数据和逻辑都在本地 JSON fixture 中完成，默认不访问外部网络。
+2. **Mock 驱动**：抖音解析、数据库持久化均使用 Mock 或占位实现；LLM 默认使用 Mock，可在本地 `.env` 中显式开启美团 LongCat provider。
 3. **Schema 严格**：Pydantic v2 负责请求/响应校验和序列化，错误信封统一为 `{code, message, detail}`。
 4. **前端就绪**：CORS 默认放行 `localhost:3000`、`localhost:5173` 和 `127.0.0.1:5173`。
 
