@@ -16,7 +16,8 @@ Content Matrix 是一个面向本地生活视频内容的知识重构系统。v0
 ## 快速启动
 
 ```bash
-cd /home/ubuntu/projects/douyinHackathon/content-matrix
+cd /home/ubuntu/projects/douyinHackathon/content-matrix/backend
+uv sync --extra dev
 uv run uvicorn backend.app.main:app --reload
 ```
 

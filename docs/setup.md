@@ -1,34 +1,73 @@
 # 环境安装与运行指南
 
-本文档说明如何在本地使用 `uv` 安装依赖、运行服务并执行测试。
+本文档说明如何在本地使用 `uv` 安装依赖、同步演示资产、运行服务并执行测试。
 
 ## 前置条件
 
 - Python 3.12 或更高版本
 - `uv` 已安装（若未安装，可通过官方脚本获取：`curl -LsSf https://astral.sh/uv/install.sh | sh`）
+- 如需查看本地视频/封面素材，请从负责人处获取 `content-matrix-asset-inbox` 压缩包
+
+## 推荐目录结构
+
+后端代码和演示资产建议放在同一个父目录下：
+
+```text
+douyinHackathon/
+├── content-matrix/              # Git 仓库
+└── content-matrix-asset-inbox/  # 演示资产，不提交到 Git
+```
+
+后端 fixture 中的素材路径使用 `../content-matrix-asset-inbox/...`，因此保持上面的兄弟目录结构即可让路径对齐。
+
+## 获取演示资产
+
+演示资产不走 Git，由负责人通过网盘/飞书等方式提供压缩包，例如：
+
+```text
+content-matrix-asset-inbox-2026-05-30.tar.gz
+```
+
+下载后在 `content-matrix` 的同级目录解压：
+
+```bash
+cd /home/ubuntu/projects/douyinHackathon
+tar -xzf content-matrix-asset-inbox-2026-05-30.tar.gz
+```
+
+资产目录中不要放 API key、cookie、账号密码或私人数据。
 
 ## 安装依赖
 
-进入项目根目录并安装可编辑包（含开发依赖）：
+进入后端目录并安装依赖（含开发依赖）：
+
+```bash
+cd /home/ubuntu/projects/douyinHackathon/content-matrix/backend
+uv sync --extra dev
+```
+
+这会安装 `fastapi[standard]`、`pydantic-settings`、`python-dotenv`、`uvicorn`，以及测试所需的 `httpx`、`pytest` 和 `pytest-asyncio`。
+
+如果你习惯从仓库根目录安装，也可以使用旧式命令：
 
 ```bash
 cd /home/ubuntu/projects/douyinHackathon/content-matrix
 uv pip install -e "backend[dev]"
 ```
 
-这会安装 `fastapi[standard]`、`pydantic-settings`、`python-dotenv`、`uvicorn`，以及测试所需的 `httpx`、`pytest` 和 `pytest-asyncio`。
-
 ## 启动服务
 
 ### 开发模式（热重载）
 
 ```bash
+cd /home/ubuntu/projects/douyinHackathon/content-matrix/backend
 uv run uvicorn backend.app.main:app --reload
 ```
 
 ### 生产模式（单次运行）
 
 ```bash
+cd /home/ubuntu/projects/douyinHackathon/content-matrix/backend
 uv run uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
 ```
 
@@ -82,14 +121,15 @@ ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
 ### 运行全部测试
 
 ```bash
-uv run pytest backend/tests/
+cd /home/ubuntu/projects/douyinHackathon/content-matrix/backend
+uv run pytest
 ```
 
 ### 运行单个测试文件
 
 ```bash
-uv run pytest backend/tests/test_app_baseline.py
-uv run pytest backend/tests/test_docs_contract.py
+uv run pytest tests/test_app_baseline.py
+uv run pytest tests/test_docs_contract.py
 ```
 
 ### 常用 pytest 选项
@@ -103,6 +143,14 @@ uv run pytest --lf backend/tests/
 
 # 生成覆盖率报告（需额外安装 pytest-cov）
 uv run pytest --cov=backend.app backend/tests/
+```
+
+如果你已经在 `backend/` 目录下，上面三条也可以简写为：
+
+```bash
+uv run pytest -v
+uv run pytest --lf
+uv run pytest --cov=backend.app
 ```
 
 ## 验证服务健康状态
@@ -123,6 +171,32 @@ curl http://localhost:8000/health
   "mode": "mock"
 }
 ```
+
+## 前端联调用法
+
+前端开发优先使用内容魔方主链路：
+
+```text
+POST /api/v1/source/resolve
+POST /api/v1/tasks
+GET  /api/v1/cube/tasks/{task_id}
+GET  /api/v1/cube/tasks/{task_id}/progress
+POST /api/v1/tasks/{task_id}/generate-card
+GET  /api/v1/cube/tasks/{task_id}
+POST /api/v1/tasks/{task_id}/save-snapshot
+GET  /api/v1/snapshots
+```
+
+常用演示输入：
+
+| 输入 | 用途 |
+|------|------|
+| `w3JLRkaZ6UQ` | 08-美食主素材，本地 fixture 映射 |
+| `K5I9o0ITcJ8` | 淮安旧链路 alias |
+| `demo_unparsed_workplace_06` | 本地未预解析职场视频，用于 `/local-video/parse` |
+| `demo_unparsed_finance_12` | 本地未预解析财经视频，用于 `/local-video/parse` |
+
+注意：`/cube/tasks/{task_id}/progress` 返回的是根据 fixture/runtime 状态推导出的演示进度，不代表真实异步后台任务。
 
 ## 目录结构说明
 
