@@ -8,5 +8,35 @@
     "task_id": "task_demo_p0a_low_budget_student",
     "demo_user_context_id": "ctx_low_budget_student",
     "resolution_strategy": "cache_matched"
+  },
+  {
+    "mapping_id": "mapping_demo_current_techu_huaian_hotel_candidate_douyin_alias",
+    "source_type": "douyin_url",
+    "source_id": "K5I9o0ITcJ8",
+    "video_asset_id": "asset_current_techu_huaian_hotel_candidate",
+    "title": "特厨探店｜淮安获奖超多的淮安宾馆餐厅体验到底怎么样",
+    "task_id": "task_demo_p0a_low_budget_student",
+    "demo_user_context_id": "ctx_low_budget_student",
+    "resolution_strategy": "cache_matched"
+  },
+  {
+    "mapping_id": "mapping_demo_douyin_08_chongqing_food",
+    "source_type": "douyin_url",
+    "source_id": "w3JLRkaZ6UQ",
+    "video_asset_id": "asset_douyin_08_chongqing_food_daydream",
+    "title": "昨晚做了个饿梦，梦到我又去雾都了",
+    "task_id": "task_demo_douyin_08_food_low_budget",
+    "demo_user_context_id": "ctx_low_budget_student",
+    "resolution_strategy": "cache_matched"
+  },
+  {
+    "mapping_id": "mapping_demo_douyin_07_chongqing_bbq_later",
+    "source_type": "douyin_url",
+    "source_id": "w3JLRkaZ6UQ_later_bbq",
+    "video_asset_id": "asset_douyin_07_chongqing_bbq_travel",
+    "title": "朋友你没时间去纽约，总有时间去重庆吧",
+    "task_id": "task_demo_douyin_07_later_related_bbq",
+    "demo_user_context_id": "ctx_efficiency_worker",
+    "resolution_strategy": "cache_matched"
   }
 ]

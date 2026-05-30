@@ -67,6 +67,22 @@ def test_asset_search_supports_multiple_tags_without_ranking_logic():
     ]
 
 
+def test_asset_search_finds_08_food_and_later_related_video():
+    client = build_client()
+
+    food_response = client.get("/api/v1/assets/search", params={"query": "重庆", "tag": "美食"})
+    later_response = client.get("/api/v1/assets/search", params={"query": "后续", "tag": "重庆"})
+
+    assert food_response.status_code == 200
+    assert later_response.status_code == 200
+    assert [item["asset_id"] for item in food_response.json()] == [
+        "asset_douyin_08_chongqing_food_daydream",
+    ]
+    assert [item["asset_id"] for item in later_response.json()] == [
+        "asset_douyin_07_chongqing_bbq_travel",
+    ]
+
+
 def test_empty_asset_search_returns_200_empty_list():
     client = build_client()
 

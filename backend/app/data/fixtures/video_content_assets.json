@@ -115,5 +115,54 @@
     "confidence_level": "high",
     "needs_confirmation": false,
     "demo_metadata": {"intended_influence_type": "supplement"}
+  },
+  {
+    "asset_id": "asset_douyin_08_chongqing_food_daydream",
+    "source": {
+      "type": "local_mapping",
+      "title": "昨晚做了个饿梦，梦到我又去雾都了",
+      "original_url": "https://v.douyin.com/w3JLRkaZ6UQ/",
+      "local_path": "../content-matrix-asset-inbox/05-douyin-resolver-test-links/2026-05-30-douyin-official-share-batch/03-media-assets/videos/08-美食-昨晚做了个饿梦-梦到我又去雾都了.mp4",
+      "cover_path": "../content-matrix-asset-inbox/05-douyin-resolver-test-links/2026-05-30-douyin-official-share-batch/03-media-assets/covers/08-美食-昨晚做了个饿梦-梦到我又去雾都了-cover.jpg",
+      "mapping_id": "mapping_demo_douyin_08_chongqing_food",
+      "duration_seconds": 41.122
+    },
+    "reconstruction_type": "decision",
+    "content_domain_tags": ["重庆", "美食", "本地生活", "探店", "旅行", "全天吃喝路线"],
+    "base_summary": "博主以“饿梦”为引子，用高密度排比列出重庆从早到晚的美食清单，适合被重构成“是否值得作为重庆逛吃路线参考”的决策卡。",
+    "key_points": ["覆盖小面、毛血旺、火锅、烤翅等重庆高辨识度食物", "视频情绪强、节奏快，适合做本地生活种草素材", "缺少价格、排队、具体店名与交通信息，现场决策需要结合用户上下文补齐"],
+    "evidence": [
+      {"evidence_id": "asset_douyin_08_food_ev_asr_doubao", "source_type": "video_explicit", "content": "等能去重庆了，我直接开炫！早上炫小面、炫豌杂面、炫加辣牛肉面，中午炫十荤十素毛血旺，下午炫火锅，晚上炫烤鸡翅、烤鸡腿、泡椒鲫鱼。", "origin": "asr", "confidence": "high", "needs_confirmation": false},
+      {"evidence_id": "asset_douyin_08_food_ev_summary", "source_type": "ai_inference", "content": "Doubao transcript summary 将该视频归纳为重庆一日三餐美食清单，核心记忆点是高频“炫”字和对重庆美食的强烈渴望。", "origin": "model_inference", "confidence": "medium", "needs_confirmation": false},
+      {"evidence_id": "asset_douyin_08_food_ev_missing", "source_type": "needs_user_confirmation", "content": "素材未提供明确价格、排队时长、店铺地理位置和营业时间，因此决策卡应把这些列为待确认项。", "origin": "model_inference", "confidence": "high", "needs_confirmation": true}
+    ],
+    "facts": [
+      {"fact_id": "asset_douyin_08_food_fact_theme", "type": "video_theme", "content": "视频主题是重庆本地美食与旅行逛吃愿望。", "entities": ["重庆", "美食", "旅行", "探店"], "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao"], "confidence": "high"},
+      {"fact_id": "asset_douyin_08_food_fact_foods", "type": "food_list", "content": "视频明确提到小面、豌杂面、毛血旺、泡椒鸡杂、麻辣香锅、红油麻辣烫、火锅、毛肚、烤鸡翅、泡椒鲫鱼等食物。", "entities": ["小面", "毛血旺", "火锅", "毛肚", "泡椒鲫鱼"], "evidence_refs": ["asset_douyin_08_food_ev_asr_doubao"], "confidence": "high"}
+    ],
+    "confidence_level": "high",
+    "needs_confirmation": true,
+    "custom_blocks": [
+      {"type": "local_media_paths", "label": "本地演示素材", "paths": {"video": "../content-matrix-asset-inbox/05-douyin-resolver-test-links/2026-05-30-douyin-official-share-batch/03-media-assets/videos/08-美食-昨晚做了个饿梦-梦到我又去雾都了.mp4", "cover": "../content-matrix-asset-inbox/05-douyin-resolver-test-links/2026-05-30-douyin-official-share-batch/03-media-assets/covers/08-美食-昨晚做了个饿梦-梦到我又去雾都了-cover.jpg", "doubao_asr": "../content-matrix-asset-inbox/05-douyin-resolver-test-links/2026-05-30-douyin-official-share-batch/04-transcripts-asr/doubao-bigasr-flash/08-美食-昨晚做了个饿梦-梦到我又去雾都了.md", "doubao_summary": "../content-matrix-asset-inbox/05-douyin-resolver-test-links/2026-05-30-douyin-official-share-batch/06-transcript-summaries-doubao/08-美食-昨晚做了个饿梦-梦到我又去雾都了-doubao-transcript-summary.md", "keyframes_dir": "../content-matrix-asset-inbox/05-douyin-resolver-test-links/2026-05-30-douyin-official-share-batch/03-media-assets/screenshots/08-美食-昨晚做了个饿梦-梦到我又去雾都了"}}
+    ],
+    "demo_metadata": {"aweme_id": "7167608613471571214", "author": "Renyi毅哥", "batch_order": "08", "category": "美食", "use_type": "p0a_candidate", "preferred_asr": "doubao-bigasr-flash"}
+  },
+  {
+    "asset_id": "asset_douyin_07_chongqing_bbq_travel",
+    "source": {
+      "type": "local_mapping",
+      "title": "朋友你没时间去纽约，总有时间去重庆吧",
+      "local_path": "../content-matrix-asset-inbox/05-douyin-resolver-test-links/2026-05-30-douyin-official-share-batch/03-media-assets/videos/07-旅行-朋友你没时间去纽约-总有时间去重庆吧.mp4",
+      "mapping_id": "mapping_demo_douyin_07_chongqing_bbq_later"
+    },
+    "reconstruction_type": "decision",
+    "content_domain_tags": ["重庆", "旅行", "烤肉", "本地生活", "后续相关视频"],
+    "base_summary": "重庆旅行/烤肉餐吧相关视频，可作为用户刷到的后续相关内容，用来展示已保存的重庆美食资产如何影响新视频重构。",
+    "key_points": ["同属重庆本地生活内容", "与 08-美食的重庆逛吃愿望形成后续关联", "视频较短且 Doubao ASR 无有效人声，适合作为相关触发素材而非主素材"],
+    "evidence": [{"evidence_id": "asset_douyin_07_bbq_ev_metadata", "source_type": "video_explicit", "content": "07-旅行视频标签与重庆旅行、望那江 live 烤肉餐吧相关，适合作为 08-美食之后刷到的相关本地生活内容。", "origin": "description", "confidence": "medium", "needs_confirmation": false}],
+    "facts": [{"fact_id": "asset_douyin_07_bbq_fact_related", "type": "related_video", "content": "该视频与 08-美食共享重庆本地生活/旅行/餐饮主题。", "entities": ["重庆", "烤肉", "旅行", "本地生活"], "evidence_refs": ["asset_douyin_07_bbq_ev_metadata"], "confidence": "medium"}],
+    "confidence_level": "medium",
+    "needs_confirmation": true,
+    "demo_metadata": {"aweme_id": "7569851901656328570", "batch_order": "07", "category": "旅行", "role": "later_related_video", "asr_note": "Doubao ASR returned no valid speech; use metadata relation only."}
   }
 ]

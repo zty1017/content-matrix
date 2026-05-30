@@ -49,6 +49,43 @@ def test_douyin_like_source_validates_shape_and_maps_without_network():
     assert payload["video_asset_id"] == "asset_current_techu_huaian_hotel_candidate"
 
 
+def test_douyin_08_food_source_maps_to_local_demo_asset_without_network():
+    client = build_client()
+
+    response = client.post(
+        "/api/v1/source/resolve",
+        json={"source_type": "douyin_url", "source_url": "https://v.douyin.com/w3JLRkaZ6UQ/"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload == {
+        "resolved_source_id": "w3JLRkaZ6UQ",
+        "source_type": "douyin_url",
+        "mapping_id": "mapping_demo_douyin_08_chongqing_food",
+        "video_asset_id": "asset_douyin_08_chongqing_food_daydream",
+        "task_id": "task_demo_douyin_08_food_low_budget",
+        "demo_user_context_id": "ctx_low_budget_student",
+        "title": "昨晚做了个饿梦，梦到我又去雾都了",
+        "resolution_strategy": "cache_matched",
+    }
+
+
+def test_huaian_douyin_alias_maps_to_existing_local_demo_task():
+    client = build_client()
+
+    response = client.post(
+        "/api/v1/source/resolve",
+        json={"source_type": "douyin_url", "source_url": "https://v.douyin.com/K5I9o0ITcJ8/"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["resolved_source_id"] == "K5I9o0ITcJ8"
+    assert payload["video_asset_id"] == "asset_current_techu_huaian_hotel_candidate"
+    assert payload["task_id"] == "task_demo_p0a_low_budget_student"
+
+
 def test_upload_reference_source_maps_to_fixture_without_binary_upload():
     client = build_client()
 
@@ -113,6 +150,20 @@ def test_asset_get_returns_schema_valid_fixture_asset():
     assert asset.source.title == "这条探店视频适合我周六下午去吗？"
 
 
+def test_douyin_08_food_asset_get_returns_local_media_paths():
+    client = build_client()
+
+    response = client.get("/api/v1/assets/asset_douyin_08_chongqing_food_daydream")
+
+    assert response.status_code == 200
+    asset = VideoContentAsset.model_validate(response.json())
+    assert asset.source.original_url == "https://v.douyin.com/w3JLRkaZ6UQ/"
+    assert asset.source.local_path is not None
+    assert "08-美食" in asset.source.local_path
+    assert asset.source.cover_path is not None
+    assert asset.demo_metadata["preferred_asr"] == "doubao-bigasr-flash"
+
+
 def test_openapi_includes_source_resolve_examples():
     client = build_client()
 
@@ -136,6 +187,7 @@ def test_openapi_includes_examples_for_reviewed_v1_endpoints():
     source_resolve_200 = paths["/api/v1/source/resolve"]["post"]["responses"]["200"]["content"]["application/json"]
     asset_detail_200 = paths["/api/v1/assets/{asset_id}"]["get"]["responses"]["200"]["content"]["application/json"]
     task_detail_200 = paths["/api/v1/tasks/{task_id}"]["get"]["responses"]["200"]["content"]["application/json"]
+    snapshots_200 = paths["/api/v1/snapshots"]["get"]["responses"]["200"]["content"]["application/json"]
 
     assert source_resolve_200["example"]["resolved_source_id"] == "preset_current_techu_huaian_hotel_candidate"
     assert asset_detail_200["example"]["asset_id"] == "asset_current_techu_huaian_hotel_candidate"
@@ -149,3 +201,4 @@ def test_openapi_includes_examples_for_reviewed_v1_endpoints():
     assert "example" in paths["/api/v1/tasks/{task_id}/generate-card"]["post"]["responses"]["200"]["content"]["application/json"]
     assert "weekend_candidate" in paths["/api/v1/tasks/{task_id}/save-snapshot"]["post"]["requestBody"]["content"]["application/json"]["examples"]
     assert "example" in paths["/api/v1/tasks/{task_id}/save-snapshot"]["post"]["responses"]["200"]["content"]["application/json"]
+    assert snapshots_200["example"][0]["snapshot_id"] == "snap_demo_p0a_low_budget_student"
