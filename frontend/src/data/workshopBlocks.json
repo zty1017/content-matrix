@@ -1,0 +1,130 @@
+{
+  "$schema_note": "Keyed by scenario id. Each value is WorkshopBlock[] (frontend src/types/workshop.ts) representing semantic blocks disassembled from selected assets in the 魔方工坊 (workshop). content from backend fixtures + inbox.",
+  "food_decision": [
+    {
+      "id": "blk_food_summary_1",
+      "type": "summary",
+      "title": "摘要观点",
+      "content": "重庆从早到晚的高密度美食清单：小面、毛血旺、火锅、烤鸡翅。",
+      "sourceAssetId": "asset_douyin_08_chongqing_food_daydream",
+      "selected": true,
+      "confidence": "high"
+    },
+    {
+      "id": "blk_food_preference_1",
+      "type": "preference",
+      "title": "偏好约束",
+      "content": "人均消费需控制在 100 元以内，小吃优先。",
+      "sourceAssetId": "asset_under_100_local_experience",
+      "selected": true,
+      "confidence": "high"
+    },
+    {
+      "id": "blk_food_constraint_1",
+      "type": "constraint",
+      "title": "约束条件",
+      "content": "周末热门店容易排队，需提前确认排队与预约情况。",
+      "sourceAssetId": "asset_weekend_queue_avoidance",
+      "selected": true,
+      "confidence": "high"
+    },
+    {
+      "id": "blk_food_evidence_1",
+      "type": "evidence",
+      "title": "证据线索",
+      "content": "素材未提供价格、店铺位置、营业时间（待确认）。",
+      "sourceAssetId": "asset_douyin_08_chongqing_food_daydream",
+      "selected": false,
+      "confidence": "high",
+      "needsConfirmation": true
+    },
+    {
+      "id": "blk_food_tag_1",
+      "type": "tag",
+      "title": "标签场景",
+      "content": "重庆 / 本地生活 / 低预算逛吃",
+      "sourceAssetId": "asset_bus_accessible_foods",
+      "selected": false,
+      "confidence": "medium"
+    }
+  ],
+  "workplace_skit": [
+    {
+      "id": "blk_wp_script_1",
+      "type": "script_hook",
+      "title": "脚本钩子",
+      "content": "一起迟到/一起请假/一起死机 —— 集体反内卷的爽感钩子。",
+      "sourceAssetId": "asset_runtime_demo_unparsed_workplace_06",
+      "selected": true,
+      "confidence": "high"
+    },
+    {
+      "id": "blk_wp_summary_1",
+      "type": "summary",
+      "title": "剧情结构",
+      "content": "迟到/加班冲突 → 同事集体反内卷 → 产品快洗卖点收束。",
+      "sourceAssetId": "asset_runtime_demo_unparsed_workplace_06",
+      "selected": true,
+      "confidence": "high"
+    },
+    {
+      "id": "blk_wp_constraint_1",
+      "type": "constraint",
+      "title": "合规约束",
+      "content": "『外卷』为戏剧化表达，复用时需弱化价值观争议。",
+      "sourceAssetId": "asset_runtime_demo_unparsed_workplace_06",
+      "selected": false,
+      "confidence": "medium",
+      "needsConfirmation": true
+    },
+    {
+      "id": "blk_wp_evidence_1",
+      "type": "evidence",
+      "title": "广告卖点",
+      "content": "蓝月亮至尊洗衣精华 · 15 分钟快洗 · 低泡 · 活性物浓度 47%。",
+      "sourceAssetId": "asset_runtime_demo_unparsed_workplace_06",
+      "selected": false,
+      "confidence": "high"
+    }
+  ],
+  "finance_knowledge": [
+    {
+      "id": "blk_fin_summary_1",
+      "type": "summary",
+      "title": "观点摘要",
+      "content": "金融自由化让资本从『生产获利』转向『以钱生钱』，制造泡沫并转移风险。",
+      "sourceAssetId": "asset_runtime_demo_unparsed_finance_12",
+      "selected": true,
+      "confidence": "medium"
+    },
+    {
+      "id": "blk_fin_evidence_1",
+      "type": "evidence",
+      "title": "证据线索",
+      "content": "用『植物大战僵尸』铁门类比资本总公式与证券化（ASR 原文）。",
+      "sourceAssetId": "asset_runtime_demo_unparsed_finance_12",
+      "selected": true,
+      "confidence": "high"
+    },
+    {
+      "id": "blk_fin_inference_1",
+      "type": "inference",
+      "title": "待确认推理",
+      "content": "引用数据时间范围与来源、是否存在反例 —— 需二次确认。",
+      "sourceAssetId": "asset_runtime_demo_unparsed_finance_12",
+      "selected": false,
+      "confidence": "low",
+      "needsConfirmation": true
+    },
+    {
+      "id": "blk_fin_constraint_1",
+      "type": "constraint",
+      "title": "风险约束",
+      "content": "高风险领域：不构成投资建议，仅作知识卡。",
+      "sourceAssetId": "asset_runtime_demo_unparsed_finance_12",
+      "selected": true,
+      "confidence": "high",
+      "needsConfirmation": true
+    }
+  ]
+}

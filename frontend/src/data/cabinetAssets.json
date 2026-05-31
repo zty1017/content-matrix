@@ -1,0 +1,211 @@
+{
+  "$schema_note": "Mirrors frontend src/data/fallbackCabinetAssets.ts. 'assets' is a Record<id, AssetCube> (src/types/assets.ts); 'shelves' is CabinetShelf[]. Asset content/ids derived from content-matrix-backend-p0a/backend/app/data/fixtures/video_content_assets.json, demo_user_asset_contexts.json, and saved_reconstruction_snapshots.json. CabinetSidebar.tsx renders asset.title/shortSummary/scenarioTags and filters by status ('all'|'formal'|'draft').",
+  "assets": {
+    "asset_under_100_local_experience": {
+      "id": "asset_under_100_local_experience",
+      "title": "100 元以内本地特色体验清单",
+      "shortSummary": "有限预算内优先选择能代表本地特色的餐饮或小路线，并提前确认价格变化。",
+      "type": "decision",
+      "status": "formal",
+      "scenarioTags": ["预算", "本地特色", "体验"],
+      "sourceType": "demo_seed",
+      "usedCount": 4,
+      "lastUsedFor": "探店决策",
+      "currentTaskReferenced": true,
+      "createdAt": "2026-05-28T09:00:00Z"
+    },
+    "asset_weekend_queue_avoidance": {
+      "id": "asset_weekend_queue_avoidance",
+      "title": "周末热门餐厅排队避坑清单",
+      "shortSummary": "周末热门餐厅/景点可能排队拥堵，建议提前确认预约、排队和营业情况。",
+      "type": "experience",
+      "status": "formal",
+      "scenarioTags": ["周末", "排队", "效率"],
+      "sourceType": "demo_seed",
+      "usedCount": 3,
+      "lastUsedFor": "效率决策",
+      "currentTaskReferenced": true,
+      "createdAt": "2026-05-28T09:10:00Z"
+    },
+    "asset_bus_accessible_foods": {
+      "id": "asset_bus_accessible_foods",
+      "title": "公交可达的本地平价美食合集",
+      "shortSummary": "公交可达、人均友好的本地餐饮选择，适合顺路体验或备选方案。",
+      "type": "experience",
+      "status": "formal",
+      "scenarioTags": ["交通", "平价美食", "本地生活"],
+      "sourceType": "demo_seed",
+      "usedCount": 2,
+      "lastUsedFor": "探店决策",
+      "createdAt": "2026-05-28T09:20:00Z"
+    },
+    "asset_huaian_low_budget_daytrip": {
+      "id": "asset_huaian_low_budget_daytrip",
+      "title": "淮安学生党低预算一日游攻略",
+      "shortSummary": "淮安市区适合学生党低预算体验的半日到一日路线，强调公交可达、控制餐饮支出。",
+      "type": "decision",
+      "status": "formal",
+      "scenarioTags": ["淮安", "低预算", "学生党"],
+      "sourceType": "demo_seed",
+      "usedCount": 5,
+      "lastUsedFor": "探店决策",
+      "createdAt": "2026-05-27T08:00:00Z"
+    },
+    "asset_short_city_route": {
+      "id": "asset_short_city_route",
+      "title": "短时间城市体验路线推荐",
+      "shortSummary": "2 小时以内的城市体验应减少跨区移动，优先交通简单、可快速完成的地点。",
+      "type": "decision",
+      "status": "formal",
+      "scenarioTags": ["2小时", "效率", "城市体验"],
+      "sourceType": "demo_seed",
+      "usedCount": 2,
+      "lastUsedFor": "效率决策",
+      "createdAt": "2026-05-27T08:20:00Z"
+    },
+    "asset_reservation_offpeak_tips": {
+      "id": "asset_reservation_offpeak_tips",
+      "title": "预约制或错峰探店经验总结",
+      "shortSummary": "热门餐厅优先预约和错峰，不想排队时应把实时排队情况列为关键确认项。",
+      "type": "experience",
+      "status": "formal",
+      "scenarioTags": ["预约", "错峰", "效率"],
+      "sourceType": "demo_seed",
+      "usedCount": 1,
+      "createdAt": "2026-05-27T08:40:00Z"
+    },
+    "asset_huaian_cuisine_background": {
+      "id": "asset_huaian_cuisine_background",
+      "title": "淮安地方菜背景与代表菜介绍",
+      "shortSummary": "淮扬菜与淮安地方饮食特色，强调代表性菜品和城市文化体验价值。",
+      "type": "knowledge",
+      "status": "formal",
+      "scenarioTags": ["淮安", "淮扬菜", "文化"],
+      "sourceType": "demo_seed",
+      "usedCount": 2,
+      "lastUsedFor": "本地文化",
+      "createdAt": "2026-05-26T10:00:00Z"
+    },
+    "asset_old_brand_local_restaurants": {
+      "id": "asset_old_brand_local_restaurants",
+      "title": "淮安老字号与本地特色餐厅合集",
+      "shortSummary": "本地代表性的老字号和特色餐厅，适合希望体验地方风味的人群。",
+      "type": "experience",
+      "status": "formal",
+      "scenarioTags": ["老字号", "本地特色", "餐厅"],
+      "sourceType": "demo_seed",
+      "usedCount": 1,
+      "createdAt": "2026-05-26T10:20:00Z"
+    },
+    "asset_local_culture_route": {
+      "id": "asset_local_culture_route",
+      "title": "本地文化体验路线资产",
+      "shortSummary": "将餐饮体验与附近城市文化点组合，形成短时间本地特色路线。",
+      "type": "decision",
+      "status": "formal",
+      "scenarioTags": ["文化路线", "本地特色", "短时间"],
+      "sourceType": "demo_seed",
+      "usedCount": 1,
+      "lastUsedFor": "本地文化",
+      "createdAt": "2026-05-26T10:40:00Z"
+    },
+    "asset_douyin_08_chongqing_food_daydream": {
+      "id": "asset_douyin_08_chongqing_food_daydream",
+      "title": "重庆逛吃灵感（昨晚做了个饿梦）",
+      "shortSummary": "高密度排比列出重庆从早到晚的美食清单，适合作为重庆逛吃路线的灵感来源。",
+      "type": "decision",
+      "status": "formal",
+      "scenarioTags": ["重庆", "美食", "旅行"],
+      "sourceType": "douyin",
+      "cover": "assets/covers/food-chongqing.jpg",
+      "usedCount": 3,
+      "lastUsedFor": "探店决策",
+      "currentTaskReferenced": true,
+      "needsConfirmation": true,
+      "createdAt": "2026-05-30T12:00:00Z"
+    },
+    "asset_douyin_07_chongqing_bbq_travel": {
+      "id": "asset_douyin_07_chongqing_bbq_travel",
+      "title": "重庆烤肉旅行（总有时间去重庆吧）",
+      "shortSummary": "重庆旅行/烤肉相关视频，可作为已保存重庆美食资产的后续相关补充节点。",
+      "type": "experience",
+      "status": "draft",
+      "scenarioTags": ["重庆", "烤肉", "旅行"],
+      "sourceType": "douyin",
+      "cover": "assets/covers/travel-chongqing-bbq.jpg",
+      "usedCount": 0,
+      "needsConfirmation": true,
+      "createdAt": "2026-05-30T12:30:00Z"
+    },
+    "asset_runtime_demo_unparsed_finance_12": {
+      "id": "asset_runtime_demo_unparsed_finance_12",
+      "title": "金融自由化观点知识卡（草稿）",
+      "shortSummary": "财经观点整理，关键数据待二次确认；高风险领域，仅作知识卡。",
+      "type": "knowledge",
+      "status": "draft",
+      "scenarioTags": ["财经", "风险提示", "待确认"],
+      "sourceType": "local_video",
+      "cover": "assets/covers/finance-freedom.jpg",
+      "usedCount": 0,
+      "highRisk": true,
+      "needsConfirmation": true,
+      "createdAt": "2026-05-30T13:00:00Z"
+    }
+  },
+  "shelves": [
+    {
+      "id": "current_related",
+      "title": "当前相关",
+      "description": "与当前重构任务相关的历史资产",
+      "kind": "current_related",
+      "assetIds": [
+        "asset_under_100_local_experience",
+        "asset_weekend_queue_avoidance",
+        "asset_bus_accessible_foods"
+      ]
+    },
+    {
+      "id": "recent",
+      "title": "最近生成",
+      "description": "最近保存入柜的资产",
+      "kind": "recent",
+      "assetIds": [
+        "asset_douyin_08_chongqing_food_daydream"
+      ]
+    },
+    {
+      "id": "frequent",
+      "title": "常用",
+      "description": "高频复用的资产",
+      "kind": "frequent",
+      "assetIds": [
+        "asset_huaian_low_budget_daytrip",
+        "asset_under_100_local_experience",
+        "asset_weekend_queue_avoidance"
+      ]
+    },
+    {
+      "id": "scenario",
+      "title": "按场景",
+      "description": "本地生活 / 效率 / 文化",
+      "kind": "scenario",
+      "assetIds": [
+        "asset_short_city_route",
+        "asset_reservation_offpeak_tips",
+        "asset_huaian_cuisine_background",
+        "asset_old_brand_local_restaurants",
+        "asset_local_culture_route"
+      ]
+    },
+    {
+      "id": "draft",
+      "title": "待确认",
+      "description": "草稿与高风险待确认资产（琥珀色底座）",
+      "kind": "draft",
+      "assetIds": [
+        "asset_douyin_07_chongqing_bbq_travel",
+        "asset_runtime_demo_unparsed_finance_12"
+      ]
+    }
+  ]
+}

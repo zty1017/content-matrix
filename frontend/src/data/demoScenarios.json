@@ -1,0 +1,641 @@
+{
+  "$schema_note": "Array of DemoScenario (frontend src/types/demo.ts). heroCube conforms to UiCubeModel (src/types/cube.ts). NOTE: the current RightPanel.tsx renders face.summaryItems only; detailBlocks are populated per the documented schema for forward-compatible richer rendering. Both are filled so the demo shows real content today and richer content when detailBlocks are wired up. Content derived from content-matrix-backend-p0a fixtures + content-matrix-asset-inbox ASR/summaries.",
+  "scenarios": [
+    {
+      "id": "food_decision",
+      "title": "探店决策魔方",
+      "subtitle": "本地生活 / 低预算 / 少排队",
+      "defaultContextId": "ctx_low_budget_student",
+      "heroCube": {
+        "taskId": "task_demo_douyin_08_food_low_budget",
+        "assetId": "asset_douyin_08_chongqing_food_daydream",
+        "title": "这条重庆美食视频适合我低预算照着吃吗？",
+        "state": "ready",
+        "phase": "final_form",
+        "referencedAssetIds": [
+          "asset_under_100_local_experience",
+          "asset_weekend_queue_avoidance",
+          "asset_bus_accessible_foods"
+        ],
+        "warnings": ["素材未提供价格、排队时长与店铺位置，现场决策前需结合用户上下文补齐。"],
+        "faces": {
+          "source": {
+            "id": "source",
+            "label": "原始视频与来源",
+            "subtitle": "抖音 · 美食种草",
+            "status": "ready",
+            "icon": "video-camera",
+            "accent": "neutral",
+            "summaryItems": [
+              "标题：昨晚做了个饿梦，梦到我又去雾都了",
+              "作者：Renyi毅哥 · 时长约 41 秒",
+              "来源：抖音链接 w3JLRkaZ6UQ（已匹配本地素材）",
+              "ASR：早上炫小面、豌杂面，中午十荤十素毛血旺，下午火锅毛肚，晚上烤鸡翅、泡椒鲫鱼",
+              "解析状态：cache_matched（本地映射命中）"
+            ],
+            "isAiExtracted": true,
+            "detailBlocks": [
+              {
+                "type": "source_preview",
+                "title": "视频信息",
+                "items": [
+                  "标题：昨晚做了个饿梦，梦到我又去雾都了",
+                  "作者：Renyi毅哥",
+                  "时长：约 41 秒",
+                  "话题：#关于我在重庆的一天 #跟着抖音去探店 #逛吃逛吃",
+                  "封面：assets/covers/food-chongqing.jpg"
+                ],
+                "data": {
+                  "cover": "assets/covers/food-chongqing.jpg",
+                  "screenshots": [
+                    "assets/screenshots/food-frame-01.jpg",
+                    "assets/screenshots/food-frame-02.jpg",
+                    "assets/screenshots/food-frame-03.jpg",
+                    "assets/screenshots/food-frame-04.jpg"
+                  ],
+                  "douyinToken": "w3JLRkaZ6UQ",
+                  "originalUrl": "https://v.douyin.com/w3JLRkaZ6UQ/"
+                }
+              },
+              {
+                "type": "summary",
+                "title": "自动抽取摘要（ASR）",
+                "items": [
+                  "等能去重庆了，我直接开炫！早上炫小面、炫豌杂面、炫加辣牛肉面",
+                  "中午炫十荤十素毛血旺，炫泡椒鸡杂、麻辣香锅、红油麻辣烫",
+                  "下午炫火锅、毛肚、干油碟腰花、蹄花、一整只鸡",
+                  "晚上炫烤鸡翅、烤鸡腿、烤大排骨、泡椒鲫鱼"
+                ]
+              }
+            ]
+          },
+          "primary_card": {
+            "id": "primary_card",
+            "label": "低预算重庆逛吃决策卡",
+            "subtitle": "决策判断卡",
+            "status": "ready",
+            "icon": "star",
+            "accent": "cyan",
+            "summaryItems": [
+              "决策级别：推荐作为灵感，不建议原样照单",
+              "一句话判断：可收藏并拆成低预算小吃清单，但火锅、整鸡、烤排骨等高成本项需二次筛选",
+              "关键因素：预算有限 · 视频未给价格 · 高热度可能排队 · 小吃比正餐更适合低预算",
+              "待确认：单项价格 · 店铺位置 · 排队时长"
+            ],
+            "isAiExtracted": true,
+            "detailBlocks": [
+              {
+                "type": "summary",
+                "title": "一句话判断",
+                "items": [
+                  "可以收藏并拆成低预算小吃清单，但火锅、整鸡、烤排骨等高成本项需要二次筛选。"
+                ]
+              },
+              {
+                "type": "key_points",
+                "title": "关键决策因素",
+                "items": [
+                  "预算有限，需控制人均与交通成本",
+                  "视频未给出任何价格信息",
+                  "高热度美食可能排队",
+                  "小吃优先比完整正餐更适合低预算"
+                ]
+              },
+              {
+                "type": "actions",
+                "title": "下一步行动",
+                "items": [
+                  "保存为重庆低预算逛吃灵感",
+                  "补充价格和店铺位置后再决定路线"
+                ]
+              }
+            ]
+          },
+          "related_assets": {
+            "id": "related_assets",
+            "label": "历史资产关联",
+            "subtitle": "3 个历史资产参与增强",
+            "status": "ready",
+            "icon": "database",
+            "accent": "blue",
+            "summaryItems": [
+              "100 元以内本地特色体验清单（偏好适配，匹配度 0.88）",
+              "周末热门餐厅排队避坑清单（冲突预警）",
+              "公交可达的本地平价美食合集（偏好适配）",
+              "增强作用：把重庆美食热情转化为低预算可执行路线，而非照单全吃"
+            ],
+            "detailBlocks": [
+              {
+                "type": "related_assets",
+                "title": "参与增强的资产",
+                "items": [
+                  "100 元以内本地特色体验清单 — 影响『一句话判断/关键因素/下一步行动』",
+                  "周末热门餐厅排队避坑清单 — 提示排队与拥堵风险",
+                  "公交可达的本地平价美食合集 — 补充低成本顺路餐饮备选"
+                ],
+                "data": [
+                  {
+                    "related_asset_id": "asset_under_100_local_experience",
+                    "title": "100 元以内本地特色体验清单",
+                    "influence_type": "preference_adaptation",
+                    "influence_summary": "卡片应把重庆美食热情转化为低预算可执行路线，而不是照单全吃。",
+                    "match_reason": "用户预算有限，而 08-美食只提供强种草清单，缺少价格和排队信息。"
+                  },
+                  {
+                    "related_asset_id": "asset_weekend_queue_avoidance",
+                    "title": "周末热门餐厅排队避坑清单",
+                    "influence_type": "conflict_warning",
+                    "influence_summary": "提示热门美食可能排队，低预算用户应避免把时间成本变成隐形支出。",
+                    "match_reason": "视频列出大量热门重庆美食，热度高的店容易排队。"
+                  },
+                  {
+                    "related_asset_id": "asset_bus_accessible_foods",
+                    "title": "公交可达的本地平价美食合集",
+                    "influence_type": "preference_adaptation",
+                    "influence_summary": "补充公交可达、人均友好的顺路餐饮备选。",
+                    "match_reason": "用户偏好低预算、公交/步行可达。"
+                  }
+                ]
+              }
+            ]
+          },
+          "inferences": {
+            "id": "inferences",
+            "label": "推理与待确认",
+            "subtitle": "1 项待确认",
+            "status": "needs_confirmation",
+            "icon": "brain",
+            "accent": "amber",
+            "needsConfirmation": true,
+            "summaryItems": [
+              "决策推理（置信度 medium · 待确认）：适合作为重庆美食灵感清单，但不应直接作为预算内行程",
+              "需要先筛选小吃、确认价格并减少高成本正餐",
+              "待确认项：单项价格、店铺位置、排队时长"
+            ],
+            "isAiExtracted": true,
+            "detailBlocks": [
+              {
+                "type": "inferences",
+                "title": "AI 推理列表",
+                "items": [
+                  "[decision_level · medium · 待确认] 该视频适合作为重庆美食灵感清单，但不应直接作为预算内行程，需要先筛选小吃、确认价格并减少高成本正餐。"
+                ],
+                "data": [
+                  {
+                    "inference_id": "inf_douyin_08_low_budget_1",
+                    "type": "decision_level",
+                    "content": "该视频适合作为重庆美食灵感清单，但不应直接作为预算内行程，需要先筛选小吃、确认价格并减少高成本正餐。",
+                    "confidence": "medium",
+                    "needs_confirmation": true
+                  }
+                ]
+              }
+            ]
+          },
+          "evidence": {
+            "id": "evidence",
+            "label": "证据与原始线索",
+            "subtitle": "视频证据 + 历史资产证据",
+            "status": "ready",
+            "icon": "shield-check",
+            "accent": "neutral",
+            "summaryItems": [
+              "视频证据（ASR · high）：重庆从早到晚的高密度美食清单",
+              "历史资产证据（high）：100 元以内本地特色体验清单",
+              "待确认（needs_user_confirmation）：素材未提供价格、排队、位置、营业时间"
+            ],
+            "detailBlocks": [
+              {
+                "type": "evidence",
+                "title": "证据链",
+                "items": [
+                  "[video_explicit · asr · high] 等能去重庆了，我直接开炫！早上炫小面…晚上炫烤鸡翅、泡椒鲫鱼",
+                  "[ai_inference · model_inference · medium] Doubao 摘要：重庆一日三餐美食清单，核心记忆点是高频『炫』字",
+                  "[needs_user_confirmation · model_inference · high] 素材未提供价格、排队时长、店铺位置和营业时间"
+                ],
+                "data": [
+                  {
+                    "evidence_id": "asset_douyin_08_food_ev_asr_doubao",
+                    "source_type": "video_explicit",
+                    "origin": "asr",
+                    "confidence": "high"
+                  },
+                  {
+                    "evidence_id": "asset_douyin_08_food_ev_missing",
+                    "source_type": "needs_user_confirmation",
+                    "origin": "model_inference",
+                    "confidence": "high"
+                  }
+                ]
+              }
+            ]
+          },
+          "snapshot": {
+            "id": "snapshot",
+            "label": "保存到内容魔方",
+            "subtitle": "保存为可复用资产",
+            "status": "ready",
+            "icon": "archive",
+            "accent": "neutral",
+            "summaryItems": [
+              "建议铭牌：重庆低预算逛吃灵感",
+              "分类：决策卡 · 本地生活 / 旅行美食",
+              "保存影响：可在后续刷到重庆相关视频时被召回为历史资产"
+            ],
+            "detailBlocks": [
+              {
+                "type": "snapshot_form",
+                "title": "保存预览",
+                "items": [
+                  "标题：重庆低预算逛吃灵感",
+                  "摘要：08-美食适合作为重庆美食愿望清单，低预算用户应先筛选小吃、确认价格和位置。",
+                  "标签：决策卡、本地生活、低预算"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "workplace_skit",
+      "title": "职场短剧拆解魔方",
+      "subtitle": "剧情结构 / 广告植入 / 脚本复用",
+      "defaultContextId": "ctx_creator",
+      "heroCube": {
+        "taskId": "task_demo_local_workplace_06",
+        "assetId": "asset_runtime_demo_unparsed_workplace_06",
+        "title": "《关于同事外卷这件事》短剧拆解",
+        "state": "ready",
+        "phase": "final_form",
+        "referencedAssetIds": [],
+        "warnings": ["当前返回本地兜底解析结果；含价值观争议与广告植入，复用时需注意合规。"],
+        "faces": {
+          "source": {
+            "id": "source",
+            "label": "原始视频与来源",
+            "subtitle": "抖音 · 职场短剧",
+            "status": "ready",
+            "icon": "video-camera",
+            "accent": "neutral",
+            "summaryItems": [
+              "标题：《关于同事外卷这件事》",
+              "作者：李什么闯 · 时长约 113 秒",
+              "来源：本地未预解析视频 demo_unparsed_workplace_06",
+              "ASR：到点了，你们怎么不进公司？同事迟到了，我们等他一起迟到，外卷嘛…后半段植入蓝月亮至尊洗衣精华",
+              "解析状态：本地兜底 ASR（默认不联网）"
+            ],
+            "isAiExtracted": true,
+            "detailBlocks": [
+              {
+                "type": "source_preview",
+                "title": "视频信息",
+                "items": [
+                  "标题：《关于同事外卷这件事》",
+                  "作者：李什么闯",
+                  "时长：约 113 秒",
+                  "话题：#内容过于真实 #办公室搞笑",
+                  "封面：assets/covers/workplace-waijuan.jpg"
+                ],
+                "data": {
+                  "cover": "assets/covers/workplace-waijuan.jpg",
+                  "screenshots": [
+                    "assets/screenshots/workplace-frame-01.jpg",
+                    "assets/screenshots/workplace-frame-02.jpg",
+                    "assets/screenshots/workplace-frame-03.jpg",
+                    "assets/screenshots/workplace-frame-04.jpg"
+                  ],
+                  "localReferenceId": "demo_unparsed_workplace_06"
+                }
+              }
+            ]
+          },
+          "primary_card": {
+            "id": "primary_card",
+            "label": "短剧拆解卡",
+            "subtitle": "经验/脚本卡",
+            "status": "ready",
+            "icon": "star",
+            "accent": "violet",
+            "summaryItems": [
+              "核心结构：迟到/加班职场冲突 → 同事集体反内卷 → 以产品快洗卖点收束生活痛点",
+              "情绪钩子：『一起迟到/一起请假』的反内卷爽感",
+              "可复用点：把生活痛点桥段自然过渡到产品卖点",
+              "提醒：含价值观争议，复用需弱化『外卷』导向"
+            ],
+            "isAiExtracted": true,
+            "detailBlocks": [
+              {
+                "type": "summary",
+                "title": "剧情结构",
+                "items": [
+                  "迟到/加班等职场冲突",
+                  "同事集体反内卷",
+                  "以产品快洗卖点收束生活痛点"
+                ]
+              },
+              {
+                "type": "key_points",
+                "title": "可复用脚本钩子",
+                "items": [
+                  "一起迟到/一起请假/一起死机",
+                  "你不会我们也不会",
+                  "打工人何必为难打工人"
+                ]
+              }
+            ]
+          },
+          "related_assets": {
+            "id": "related_assets",
+            "label": "历史资产关联",
+            "subtitle": "暂无关联历史资产",
+            "status": "empty",
+            "icon": "database",
+            "accent": "blue",
+            "summaryItems": [
+              "本场景为本地解析演示，暂无召回历史资产",
+              "可在魔方工坊中与其他短剧脚本资产组合复用"
+            ],
+            "detailBlocks": [
+              {
+                "type": "related_assets",
+                "title": "参与增强的资产",
+                "items": ["暂无召回历史资产（本地解析演示）"],
+                "data": []
+              }
+            ]
+          },
+          "inferences": {
+            "id": "inferences",
+            "label": "推理与待确认",
+            "subtitle": "内容观点与广告区分",
+            "status": "ready",
+            "icon": "brain",
+            "accent": "cyan",
+            "summaryItems": [
+              "推理：钩子前置（先抛冲突再反转）对完播率有利",
+              "推理：产品植入在后半段，需与剧情观点区分",
+              "提示：『外卷』为戏剧化表达，复用时勿作为真实职场建议"
+            ],
+            "isAiExtracted": true,
+            "detailBlocks": [
+              {
+                "type": "inferences",
+                "title": "AI 推理列表",
+                "items": [
+                  "[script_structure · high] 钩子前置 + 集体反转，情绪点强烈，利于完播",
+                  "[brand_placement · high] 广告信息集中在后半段，应与内容观点区分标注"
+                ],
+                "data": [
+                  {
+                    "inference_id": "inf_workplace_06_1",
+                    "type": "script_structure",
+                    "content": "钩子前置与集体反转使情绪点强烈，有利于完播率。",
+                    "confidence": "high",
+                    "needs_confirmation": false
+                  }
+                ]
+              }
+            ]
+          },
+          "evidence": {
+            "id": "evidence",
+            "label": "证据与原始线索",
+            "subtitle": "ASR + 广告卖点",
+            "status": "ready",
+            "icon": "shield-check",
+            "accent": "neutral",
+            "summaryItems": [
+              "视频证据（ASR · high）：外卷宣言 + 集体迟到/加班桥段",
+              "产品露出：蓝月亮至尊洗衣精华 · 15 分钟快洗 · 低泡易漂洗 · 活性物浓度 47%",
+              "风险提示：价值观争议、职场误导、产品植入突兀"
+            ],
+            "detailBlocks": [
+              {
+                "type": "evidence",
+                "title": "证据链",
+                "items": [
+                  "[video_explicit · asr · high] 以前大家内卷…所以我们要外卷…内卷不得善终，外卷才是前途光明",
+                  "[brand_placement] 蓝月亮至尊洗衣精华、15 分钟快洗、低泡易漂洗、活性物浓度 47%"
+                ]
+              }
+            ]
+          },
+          "snapshot": {
+            "id": "snapshot",
+            "label": "保存到内容魔方",
+            "subtitle": "保存为脚本模板",
+            "status": "ready",
+            "icon": "archive",
+            "accent": "neutral",
+            "summaryItems": [
+              "建议铭牌：反内卷职场短剧脚本模板",
+              "分类：脚本卡 · 职场 / 广告植入",
+              "保存影响：可在魔方工坊复用『冲突→反转→卖点』结构"
+            ],
+            "detailBlocks": [
+              {
+                "type": "snapshot_form",
+                "title": "保存预览",
+                "items": [
+                  "标题：反内卷职场短剧脚本模板",
+                  "摘要：迟到/加班冲突 → 集体反内卷 → 产品快洗卖点收束",
+                  "标签：脚本卡、职场、广告植入"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "finance_knowledge",
+      "title": "财经知识解析魔方",
+      "subtitle": "观点摘要 / 证据链 / 风险提示",
+      "defaultContextId": "ctx_knowledge_worker",
+      "heroCube": {
+        "taskId": "task_demo_local_finance_12",
+        "assetId": "asset_runtime_demo_unparsed_finance_12",
+        "title": "《金融的自由化》观点解析（知识卡）",
+        "state": "blocked",
+        "phase": "needs_confirmation",
+        "referencedAssetIds": [],
+        "warnings": [
+          "高风险领域：财经内容仅作知识整理，不构成投资建议。",
+          "关键数据需二次确认后才能完成最终生成。"
+        ],
+        "faces": {
+          "source": {
+            "id": "source",
+            "label": "原始视频与来源",
+            "subtitle": "抖音 · 财经科普",
+            "status": "ready",
+            "icon": "video-camera",
+            "accent": "neutral",
+            "summaryItems": [
+              "标题：第9期 | 马政经中的顶级思维，金融的自由化",
+              "作者：喵的思维 · 时长约 8 分钟",
+              "来源：本地未预解析视频 demo_unparsed_finance_12",
+              "ASR：用『植物大战僵尸』的铁门类比，解释资本从生产获利转向以钱生钱、再到金融自由化与证券化",
+              "观前提示：内容基于西方金融史（美国 1980-2008），请理性观看"
+            ],
+            "isAiExtracted": true,
+            "detailBlocks": [
+              {
+                "type": "source_preview",
+                "title": "视频信息",
+                "items": [
+                  "标题：第9期 | 马政经中的顶级思维，金融的自由化",
+                  "作者：喵的思维",
+                  "时长：约 8 分钟",
+                  "封面：assets/covers/finance-freedom.jpg"
+                ],
+                "data": {
+                  "cover": "assets/covers/finance-freedom.jpg",
+                  "screenshots": [
+                    "assets/screenshots/finance-frame-01.jpg",
+                    "assets/screenshots/finance-frame-02.jpg",
+                    "assets/screenshots/finance-frame-03.jpg",
+                    "assets/screenshots/finance-frame-04.jpg"
+                  ],
+                  "localReferenceId": "demo_unparsed_finance_12"
+                }
+              }
+            ]
+          },
+          "primary_card": {
+            "id": "primary_card",
+            "label": "金融自由化知识卡",
+            "subtitle": "知识解释卡",
+            "status": "ready",
+            "icon": "star",
+            "accent": "amber",
+            "summaryItems": [
+              "核心观点：金融自由化让资本从『生产获利』转向『以钱生钱』",
+              "机制：松绑实体约束 → 资产证券化 → 价格泡沫",
+              "结论：金融脱离实体后不创造财富，只是转移财富、收割未来",
+              "定位：适合做知识卡，不适合做投资决策卡"
+            ],
+            "isAiExtracted": true,
+            "detailBlocks": [
+              {
+                "type": "summary",
+                "title": "观点摘要",
+                "items": [
+                  "提炼视频主张：金融自由化的本质是资本从生产获利转向以钱生钱",
+                  "标记证据来源：基于西方金融史范例（美国 1980-2008）",
+                  "区分事实与推测：『收割未来』为作者观点，非中立结论"
+                ]
+              }
+            ]
+          },
+          "related_assets": {
+            "id": "related_assets",
+            "label": "历史资产关联",
+            "subtitle": "暂无关联历史资产",
+            "status": "empty",
+            "icon": "database",
+            "accent": "blue",
+            "summaryItems": [
+              "本场景为本地解析演示，暂无召回历史资产",
+              "可保存为知识卡后，供后续财经类视频召回参考"
+            ],
+            "detailBlocks": [
+              {
+                "type": "related_assets",
+                "title": "参与增强的资产",
+                "items": ["暂无召回历史资产（本地解析演示）"],
+                "data": []
+              }
+            ]
+          },
+          "inferences": {
+            "id": "inferences",
+            "label": "推理与待确认",
+            "subtitle": "高风险 · 需确认",
+            "status": "needs_confirmation",
+            "icon": "brain",
+            "accent": "red",
+            "needsConfirmation": true,
+            "highRisk": true,
+            "summaryItems": [
+              "高风险提示：不构成投资建议，仅作知识整理",
+              "待确认：引用数据的时间范围与来源",
+              "待确认：是否存在反例或对立观点",
+              "需用户确认后才能完成最终知识卡生成"
+            ],
+            "isAiExtracted": true,
+            "detailBlocks": [
+              {
+                "type": "inferences",
+                "title": "AI 推理列表（待确认）",
+                "items": [
+                  "[risk_notice · 待确认] 不构成投资建议，关键数据需二次确认",
+                  "[verification · 待确认] 时间范围、引用数据来源、是否存在反例"
+                ],
+                "data": [
+                  {
+                    "inference_id": "inf_finance_12_risk",
+                    "type": "risk_notice",
+                    "content": "财经内容仅作知识整理，关键数据与结论需用户二次确认，不构成投资建议。",
+                    "confidence": "medium",
+                    "needs_confirmation": true
+                  }
+                ]
+              }
+            ]
+          },
+          "evidence": {
+            "id": "evidence",
+            "label": "证据与原始线索",
+            "subtitle": "ASR + 待验证清单",
+            "status": "ready",
+            "icon": "shield-check",
+            "accent": "neutral",
+            "summaryItems": [
+              "视频证据（ASR · high）：用铁门类比解释资本总公式与金融自由化",
+              "待确认数据：时间范围 · 引用数据来源 · 是否存在反例",
+              "风险提示：不构成投资建议，适合做知识卡而非买卖决策卡"
+            ],
+            "detailBlocks": [
+              {
+                "type": "evidence",
+                "title": "证据链",
+                "items": [
+                  "[video_explicit · asr · high] 这就是泡沫经济背后的始作俑者，金融的自由化…它不创造财富，只是转移财富，不依赖现在，而是收割未来",
+                  "[verification_checklist] 时间范围、引用数据来源、是否存在反例"
+                ]
+              }
+            ]
+          },
+          "snapshot": {
+            "id": "snapshot",
+            "label": "保存到内容魔方",
+            "subtitle": "高风险：先确认或存草稿",
+            "status": "needs_confirmation",
+            "icon": "archive",
+            "accent": "amber",
+            "needsConfirmation": true,
+            "summaryItems": [
+              "高风险内容：确认推理后方可保存为正式知识卡",
+              "可选：保存为草稿（进入『待确认』陈列架，琥珀色底座）",
+              "建议铭牌：金融自由化观点知识卡"
+            ],
+            "detailBlocks": [
+              {
+                "type": "snapshot_form",
+                "title": "保存预览（需确认）",
+                "items": [
+                  "标题：金融自由化观点知识卡",
+                  "摘要：金融自由化让资本以钱生钱、制造泡沫并转移风险（作者观点）",
+                  "标签：知识卡、财经、风险提示",
+                  "状态：待确认 → 可『确认推理』或『保存为草稿』"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

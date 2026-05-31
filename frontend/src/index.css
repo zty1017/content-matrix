@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 overflow-hidden select-none font-sans;
+    background: radial-gradient(circle at 50% -20%, #e0f2fe 0%, #f8fafc 40%, #f1f5f9 100%);
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/40 backdrop-blur-md border border-white/60 shadow-[0_4px_30px_rgba(0,0,0,0.03)];
+  }
+  
+  .glass-button {
+    @apply bg-white/50 hover:bg-white/80 backdrop-blur-sm border border-white/50 shadow-sm transition-all duration-300;
+  }
+
+  .glass-button-active {
+    @apply bg-blue-500/10 border-blue-400/50 text-blue-700 shadow-[inset_0_0_10px_rgba(59,130,246,0.1)];
+  }
+
+  .glass-pill {
+    @apply bg-white/60 backdrop-blur-md border border-white/80 rounded-full shadow-sm;
+  }
+}

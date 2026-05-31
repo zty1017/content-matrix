@@ -1,0 +1,163 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "volcengine-plan/kimi-k2.5",
+      "fallback_models": [
+        { "model": "zhipuai-coding-plan/glm-5.1" },
+        { "model": "zhipuai-coding-plan/glm-5" },
+        { "model": "tmp/gpt-5.4-fast" }
+      ]
+    },
+    "hephaestus": {
+      "model": "tmp/gpt-5.4",
+      "variant": "xhigh",
+      "fallback_models": [
+        { "model": "tmp/gpt-5.4-fast" },
+        { "model": "zhipuai-coding-plan/glm-5.1" }
+      ]
+    },
+    "oracle": {
+      "model": "anthropic/claude-opus-4-7",
+      "variant": "xhigh",
+      "fallback_models": [
+        { "model": "tmp/gpt-5.5" , "variant": "high"},
+        { "model": "zhipuai-coding-plan/glm-5.1" },
+        { "model": "github-copilot/gemini-3.1-pro-preview", "variant": "high" }
+      ]
+    },
+    "librarian": {
+      "model": "zhipuai-coding-plan/glm-5-turbo",
+      "fallback_models": [
+        { "model": "opencode/minimax-m2.5-free" },
+        { "model": "tmp/gpt-5.4-mini-fast" }
+      ]
+    },
+    "explore": {
+      "model": "volcengine-plan/kimi-k2.6",
+      "fallback_models": [
+        { "model": "github-copilot/gpt-5-mini" },
+        { "model": "opencode/minimax-m2.5-free" }
+      ]
+    },
+    "multimodal-looker": {
+      "model": "zhipuai-coding-plan/glm-4.6v",
+      "fallback_models": [
+        { "model": "tmp/gpt-5.4-fast" },
+        { "model": "github-copilot/gpt-4o" },
+        { "model": "opencode/gpt-5-nano" }
+      ]
+    },
+    "prometheus": {
+      "model": "zhipuai-coding-plan/glm-5.1",
+      "fallback_models": [
+        { "model": "volcengine-plan/kimi-k2.5" },
+        { "model": "tmp/gpt-5.4-fast" }
+      ]
+    },
+    "metis": {
+      "model": "tmp/gpt-5.5",
+      "variant": "high",
+      "fallback_models": [
+        { "model": "tmp/gpt-5.4-fast" },
+        { "model": "volcengine-plan/kimi-k2.5" }
+      ]
+    },
+    "momus": {
+      "model": "tmp/gpt-5.5",
+      "variant": "high",
+      "fallback_models": [
+        { "model": "tmp/gpt-5.4-fast" },
+        { "model": "zhipuai-coding-plan/glm-5.1" }
+      ]
+    },
+    "atlas": {
+      "model": "tmp/gpt-5.5",
+      "fallback_models": [
+        { "model": "zhipuai-coding-plan/glm-5-turbo" },
+        { "model": "opencode/minimax-m2.5-free" }
+      ]
+    },
+    "sisyphus-junior": {
+      "model": "zhipuai-coding-plan/glm-5-turbo",
+      "fallback_models": [
+        { "model": "volcengine-plan/kimi-k2.5" },
+        { "model": "tmp/gpt-5.4-mini-fast" },
+        { "model": "opencode/minimax-m2.5-free" }
+      ]
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "github-copilot/gemini-3.1-pro-preview",
+      "variant": "high",
+      "fallback_models": [
+        { "model": "tmp/gpt-5.4-fast" },
+        { "model": "volcengine-plan/kimi-k2.5" }
+      ]
+    },
+    "ultrabrain": {
+      "model": "tmp/gpt-5.4",
+      "variant": "xhigh",
+      "fallback_models": [
+        { "model": "zhipuai-coding-plan/glm-5.1" },
+        { "model": "volcengine-plan/kimi-k2.5" }
+      ]
+    },
+    "deep": {
+      "model": "tmp/gpt-5.4",
+      "fallback_models": [
+        { "model": "zhipuai-coding-plan/glm-5.1" },
+        { "model": "volcengine-plan/kimi-k2.5" }
+      ]
+    },
+    "artistry": {
+      "model": "tmp/gpt-5.5",
+      "variant": "high",
+      "fallback_models": [
+        { "model": "volcengine-plan/kimi-k2.6" },
+        { "model": "tmp/gpt-5.4-fast" }
+      ]
+    },
+    "quick": {
+      "model": "opencode/minimax-m2.5-free",
+      "fallback_models": [
+        { "model": "volcengine-plan/kimi-k2.6" },
+        { "model": "tmp/gpt-5.4-mini-fast" },
+        { "model": "github-copilot/gpt-5-mini" }
+      ]
+    },
+    "unspecified-low": {
+      "model": "opencode/minimax-m2.5-free",
+      "fallback_models": [
+        { "model": "zhipuai-coding-plan/glm-5-turbo" },
+        { "model": "volcengine-plan/kimi-k2.6" },
+        { "model": "tmp/gpt-5.4-mini-fast" }
+      ]
+    },
+    "unspecified-high": {
+      "model": "volcengine-plan/kimi-k2.5",
+      "fallback_models": [
+        { "model": "zhipuai-coding-plan/glm-5.1" },
+        { "model": "tmp/gpt-5.4-fast" },
+        { "model": "zhipuai-coding-plan/glm-5" }
+      ]
+    },
+    "writing": {
+      "model": "zhipuai-coding-plan/glm-5.1",
+      "fallback_models": [
+        { "model": "volcengine-plan/kimi-k2.5" },
+        { "model": "tmp/gpt-5.4-fast" }
+      ]
+    }
+  },
+  "background_task": {
+    "providerConcurrency": {
+      "tmp": 2,
+      "zhipuai-coding-plan": 1,
+      "volcengine-plan": 8,
+      "opencode": 2,
+      "github-copilot": 1
+    }
+  }
+}
